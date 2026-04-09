@@ -3,479 +3,485 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Yasmin Akter Liza - Premium Architecture Portfolio.">
-    <title>Yasmin Akter Liza | Architectural Vision</title>
     
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title data-cms-text="site_title">Yasmin Akter LIZA - Architecture Portfolio</title>
+    <meta name="description" content="Explore the architectural projects and spatial dynamics by Yasmin Akter Liza. A professional portfolio showcasing exterior, interior, and sustainable design.">
+    <meta name="keywords" content="Architecture, Portfolio, Yasmin Akter Liza, Architect, Interior Design, Exterior Design, Sustainable Design">
+    <meta name="author" content="Yasmin Akter Liza">
+    <meta name="robots" content="index, follow">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        accent: '#CD7F32', // Bronze/Gold
-                        darkBg: '#050505',
-                        lightBg: '#F8F9FA',
-                    },
                     fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        bronze: '#CD7F32'
                     }
                 }
             }
         }
     </script>
 
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap');
+        /* Custom CSS Elements */
+        body { margin: 0; overflow-x: hidden; }
+        ::selection { background-color: #CD7F32; color: #FFFFFF; }
         
-        html { scroll-behavior: smooth; }
-        body { 
-            margin: 0; overflow-x: hidden; 
-            transition: background-color 0.5s ease, color 0.5s ease;
-        }
-        
-        /* Smooth Global Transitions */
-        *, *::before, *::after {
-            transition: border-color 0.3s ease, background-color 0.3s ease;
-        }
-
-        /* Architectural Grid Background */
-        .bg-grid {
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background-size: 50px 50px;
-            background-image: 
-                linear-gradient(to right, rgba(128, 128, 128, 0.05) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
-            mask-image: radial-gradient(circle at center, black, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
-        }
-
-        /* Subtle Grain Texture */
-        .grain {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.03; pointer-events: none; z-index: 100;
-            mix-blend-mode: overlay;
+        .blueprint-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(205, 127, 50, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(205, 127, 50, 0.05) 1px, transparent 1px);
         }
         
-        /* Premium Text Outline */
-        .text-outline-dark { -webkit-text-stroke: 1px rgba(255,255,255,0.15); color: transparent; }
-        .text-outline-light { -webkit-text-stroke: 1px rgba(0,0,0,0.15); color: transparent; }
-        .vertical-rl { writing-mode: vertical-rl; }
+        .noise {
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal-up { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-left { opacity: 0; transform: translateX(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal-right { opacity: 0; transform: translateX(-40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
         
-        /* Shimmer Effect */
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-        .shimmer {
-            background: linear-gradient(90deg, currentColor, #CD7F32, currentColor);
-            background-size: 200% 100%;
-            animation: shimmer 4s infinite linear;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #CD7F32; border-radius: 10px; }
-
-        /* Hide elements during preloader */
-        .content-hidden { opacity: 0; visibility: hidden; }
-        .content-visible { opacity: 1; visibility: visible; transition: opacity 1.5s ease; }
+        .revealed { opacity: 1; transform: translate(0, 0); }
     </style>
 </head>
-<body class="bg-lightBg text-neutral-900 dark:bg-darkBg dark:text-neutral-100 antialiased font-sans">
-    <div id="root"></div>
+<body class="min-h-screen transition-colors duration-1000 bg-[#F8F9FA] text-[#111827] dark:bg-[#050507] dark:text-[#F9FAFB] font-sans selection:bg-bronze selection:text-[#FFFFFF]">
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
+    <div class="blueprint-grid fixed inset-0 z-0 pointer-events-none opacity-30" aria-hidden="true"></div>
+    <div class="noise fixed inset-0 z-[1] pointer-events-none mix-blend-overlay opacity-[0.03] dark:opacity-[0.05]" aria-hidden="true"></div>
+    
+    <div id="cursor-dot" class="fixed w-2 h-2 bg-bronze rounded-full z-[1000] pointer-events-none transition-transform duration-75 ease-out hidden lg:block shadow-[0_0_12px_#CD7F32]" aria-hidden="true"></div>
+    <div id="cursor-h" class="fixed left-0 w-full h-[1px] bg-bronze/10 z-[999] pointer-events-none hidden lg:block" aria-hidden="true"></div>
+    <div id="cursor-v" class="fixed top-0 w-[1px] h-full bg-bronze/10 z-[999] pointer-events-none hidden lg:block" aria-hidden="true"></div>
 
-        // --- Lucide Icon Component ---
-        const Icon = ({ name, className = "" }) => {
-            const spanRef = useRef(null);
-            useEffect(() => {
-                if (spanRef.current && window.lucide) {
-                    spanRef.current.innerHTML = `<i data-lucide="${name}" class="${className}"></i>`;
-                    window.lucide.createIcons({ root: spanRef.current });
-                }
-            }, [name, className]);
-            return <span ref={spanRef} className="inline-flex items-center justify-center"></span>;
-        };
+    <div id="scroll-progress" class="fixed top-0 left-0 h-[2px] bg-bronze z-[110] transition-all duration-100 w-0 shadow-[0_0_8px_#CD7F32]" aria-hidden="true"></div>
 
-        // --- Scroll Animation Hook ---
-        const useIntersectionObserver = (options = {}) => {
-            const [isVisible, setIsVisible] = useState(false);
-            const domRef = useRef();
-
-            useEffect(() => {
-                const observer = new IntersectionObserver(([entry]) => {
-                    if (entry.isIntersecting) {
-                        setIsVisible(true);
-                        observer.unobserve(entry.target);
-                    }
-                }, { threshold: 0.1, ...options });
-
-                if (domRef.current) observer.observe(domRef.current);
-                return () => domRef.current && observer.unobserve(domRef.current);
-            }, [options]);
-
-            return [domRef, isVisible];
-        };
-
-        const FadeInSection = ({ children, delay = 0, className = '', direction = 'up' }) => {
-            const [ref, isVisible] = useIntersectionObserver();
-            const getTranslate = () => {
-                switch(direction) {
-                    case 'left': return 'translate-x-10';
-                    case 'right': return '-translate-x-10';
-                    default: return 'translate-y-10';
-                }
-            };
-
-            return (
-                <div
-                    ref={ref}
-                    className={`transition-all duration-1000 ease-out ${
-                        isVisible ? 'opacity-100 translate-x-0 translate-y-0' : `opacity-0 ${getTranslate()}`
-                    } ${className}`}
-                    style={{ transitionDelay: `${delay}ms` }}
-                >
-                    {children}
+    <header>
+        <nav class="fixed top-0 w-full z-[100] px-6 py-6 md:px-12 flex justify-between items-center mix-blend-difference">
+            <div class="flex items-center gap-4 cursor-pointer group">
+                <div class="w-10 h-10 border-2 border-bronze flex items-center justify-center rotate-45 group-hover:bg-bronze transition-colors duration-500 shrink-0">
+                    <span data-cms-text="logo_text" class="text-xs -rotate-45 font-black text-bronze group-hover:text-[#08080A]">YA</span>
                 </div>
-            );
-        };
+                <span data-cms-text="nav_title" class="text-xs md:text-sm tracking-[0.3em] uppercase font-black text-[#FFFFFF] hidden sm:block drop-shadow-md truncate">Architecture Studio</span>
+            </div>
+            <div class="flex items-center gap-8">
+                <button id="theme-toggle" aria-label="Toggle Dark Mode" class="p-3 border border-[#FFFFFF]/20 rounded-full hover:border-bronze transition-all bg-[#FFFFFF]/10 backdrop-blur-md text-white shadow-lg hover:shadow-[0_0_20px_rgba(205,127,50,0.5)] shrink-0">
+                    <i data-lucide="sun" id="theme-icon" class="w-5 h-5"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
 
-        function App() {
-            // States
-            const [isDark, setIsDark] = useState(true);
-            const [scrollProgress, setScrollProgress] = useState(0);
-            const [isLoaded, setIsLoaded] = useState(false);
-            
-            // Refs for 3D Card Parallax
-            const cardRef = useRef(null);
-            const dimXRef = useRef(null);
-            const dimYRef = useRef(null);
-
-            // Preloader Logic
-            useEffect(() => {
-                const timer = setTimeout(() => setIsLoaded(true), 2000);
-                return () => clearTimeout(timer);
-            }, []);
-
-            // Theme Toggle Logic
-            useEffect(() => {
-                const root = window.document.documentElement;
-                if (isDark) {
-                    root.classList.add('dark');
-                } else {
-                    root.classList.remove('dark');
-                }
-            }, [isDark]);
-
-            // Scroll Progress
-            useEffect(() => {
-                const handleScroll = () => {
-                    const totalScroll = document.documentElement.scrollTop;
-                    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                    const scroll = `${totalScroll / windowHeight * 100}`;
-                    setScrollProgress(scroll);
-                };
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-
-            // 3D Mouse Parallax
-            useEffect(() => {
-                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-                if (isTouchDevice) return;
-
-                let animationFrameId;
-                const handleMove = (e) => {
-                    animationFrameId = requestAnimationFrame(() => {
-                        const x = e.clientX;
-                        const y = e.clientY;
-                        const centerX = window.innerWidth / 2;
-                        const centerY = window.innerHeight / 2;
-                        const rotateX = ((y - centerY) / centerY) * -12;
-                        const rotateY = ((x - centerX) / centerX) * 12;
-
-                        if (cardRef.current) {
-                            cardRef.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
-                        }
-                        if (dimXRef.current) dimXRef.current.innerText = `X: ${Math.abs(rotateY * 2).toFixed(2)}`;
-                        if (dimYRef.current) dimYRef.current.innerText = `Y: ${Math.abs(rotateX * 2).toFixed(2)}`;
-                    });
-                };
-
-                window.addEventListener('mousemove', handleMove, { passive: true });
-                return () => {
-                    window.removeEventListener('mousemove', handleMove);
-                    cancelAnimationFrame(animationFrameId);
-                };
-            }, []);
-
-            return (
-                <>
-                    {/* Preloader */}
-                    <div className={`fixed inset-0 z-[999] bg-darkBg flex flex-col items-center justify-center transition-all duration-1000 ${isLoaded ? 'opacity-0 pointer-events-none -translate-y-10' : 'opacity-100 translate-y-0'}`}>
-                        <div className="w-16 h-16 border-t-2 border-r-2 border-accent rounded-full animate-spin mb-6"></div>
-                        <p className="text-accent text-xs tracking-[0.4em] uppercase font-semibold animate-pulse">Designing Spaces</p>
+    <main>
+        <section class="relative min-h-[90vh] flex flex-col items-center justify-center px-6 pt-24 pb-20 overflow-hidden">
+            <div class="text-center z-10 w-full max-w-6xl mx-auto flex flex-col items-center">
+                <div class="mb-12 flex items-center justify-center gap-4">
+                    <span class="h-[2px] w-12 bg-bronze"></span>
+                    <p data-cms-text="hero_tagline" class="text-xs md:text-sm tracking-[0.6em] md:tracking-[0.8em] uppercase text-bronze font-black italic drop-shadow-sm break-words">স্থাপনাই জীবন</p>
+                    <span class="h-[2px] w-12 bg-bronze"></span>
+                </div>
+                
+                <div class="flex flex-col md:flex-row items-center justify-center gap-12 lg:gap-20 w-full">
+                    <div class="relative group cursor-default flex-shrink-0">
+                        <div class="absolute inset-[-12%] rounded-full border-2 border-bronze/30 border-t-bronze animate-[spin_20s_linear_infinite]"></div>
+                        <div class="relative w-[55vw] h-[55vw] sm:w-[40vw] sm:h-[40vw] md:w-[24vw] md:h-[24vw] lg:w-[20vw] lg:h-[20vw] rounded-full overflow-hidden border-2 border-[#FFFFFF]/20 shadow-[0_0_60px_rgba(0,0,0,0.4)] z-10 bg-[#121214] dark:bg-[#EAEAEA]">
+                            <img data-cms-src="hero_image" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=800" fetchpriority="high" decoding="async" class="w-full h-full object-cover grayscale opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000 ease-in-out" alt="Portrait" />
+                            <div class="absolute inset-0 transition-colors duration-700 bg-[#000000]/10 dark:bg-[#FFFFFF]/5 group-hover:bg-transparent"></div>
+                        </div>
+                        <div class="absolute bottom-4 right-4 md:bottom-2 md:right-2 lg:bottom-4 lg:right-4 w-14 h-14 bg-bronze rounded-full border-[4px] border-[#08080A] dark:border-[#F9F9F8] z-20 flex items-center justify-center text-[#FFFFFF] shadow-2xl transition-transform group-hover:scale-110">
+                            <i data-lucide="pencil-ruler" class="w-6 h-6"></i>
+                        </div>
                     </div>
 
-                    <div className={isLoaded ? 'content-visible relative' : 'content-hidden'}>
-                        {/* Global Background Elements */}
-                        <div className="bg-grid"></div>
-                        <div className="grain hidden md:block"></div>
+                    <div class="flex flex-col items-center md:items-start text-center md:text-left mt-6 md:mt-0 max-w-full">
+                        <h1 data-cms-text="hero_name" class="text-[12vw] sm:text-[10vw] md:text-[7vw] lg:text-[6vw] font-serif leading-none italic tracking-tight mb-4 text-[#111827] dark:text-[#FFFFFF] font-bold break-words">Yasmin Akter</h1>
+                        
+                        <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 mb-5">
+                            <div class="h-[2px] w-8 md:w-12 bg-bronze hidden sm:block"></div>
+                            <span data-cms-text="hero_subtitle" class="text-xs md:text-sm font-black tracking-[0.2em] md:tracking-[0.4em] uppercase text-[#374151] dark:text-[#D1D5DB] break-words text-center md:text-left">Architectural Excellence // Spatial Dynamics</span>
+                        </div>
+                        
+                        <h1 data-cms-text="hero_highlight" class="text-[15vw] sm:text-[12vw] md:text-[9vw] lg:text-[8.5vw] font-black leading-[0.8] tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-[#4B5563] via-[#CD7F32] to-[#111827] dark:from-[#F3F4F6] dark:via-[#CD7F32] dark:to-[#9CA3AF] -ml-1 md:-ml-2 drop-shadow-lg break-words">LIZA.</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                        {/* Top Scroll Progress Bar */}
-                        <div className="fixed top-0 left-0 h-1 bg-accent z-[200] transition-all duration-100 ease-out" style={{ width: `${scrollProgress}%` }}></div>
+        <section class="relative py-24 px-6 border-y border-bronze/20 bg-gradient-to-b from-transparent via-bronze/[0.05] to-transparent">
+            <div class="max-w-7xl mx-auto relative z-10">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 reveal-up">
+                    
+                    <div class="p-8 md:p-10 rounded-lg border hover:border-bronze transition-all duration-700 group relative overflow-hidden bg-[#FFFFFF] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151] shadow-md hover:shadow-xl">
+                        <div class="absolute top-[-10%] right-[-10%] w-24 h-24 opacity-[0.05] pointer-events-none group-hover:opacity-10 transition-opacity rotate-12 text-[#000000] dark:text-[#FFFFFF]"><i data-cms-icon="metric_1_icon" data-lucide="layout" class="w-full h-full"></i></div>
+                        <div class="flex justify-between items-start mb-8 md:mb-10 relative z-10">
+                            <div class="p-3 bg-bronze/15 border border-bronze/30 rounded-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm shrink-0">
+                                <i data-cms-icon="metric_1_icon" data-lucide="layout" class="w-6 h-6 text-bronze"></i>
+                            </div>
+                            <span data-cms-text="metric_1_id" class="font-mono text-xs font-bold px-3 py-1.5 rounded-md border bg-[#F3F4F6] text-[#374151] border-[#D1D5DB] dark:bg-[#1F2937] dark:text-[#D1D5DB] dark:border-[#4B5563] whitespace-nowrap">SP-X9</span>
+                        </div>
+                        <p data-cms-text="metric_1_label" class="text-xs md:text-sm font-black tracking-[0.15em] text-[#1F2937] dark:text-[#E5E7EB] uppercase mb-2 relative z-10 break-words line-clamp-2">Spatial Efficiency</p>
+                        <div class="flex items-baseline gap-1 mb-6 md:mb-8 relative z-10">
+                            <span data-cms-text="metric_1_value" class="text-5xl md:text-6xl font-black tracking-tighter text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors duration-500">94</span>
+                            <span class="text-sm md:text-base font-bold text-bronze">%</span>
+                        </div>
+                        <div class="h-[4px] w-full rounded-full relative overflow-hidden bg-[#E5E7EB] dark:bg-[#374151]">
+                            <div class="absolute h-full bg-gradient-to-r from-bronze/50 to-bronze transition-all duration-[2000ms] ease-out w-0 group-hover:w-full" style="width: 94%" data-cms-style-width="metric_1_value"></div>
+                        </div>
+                    </div>
 
-                        {/* Theme Toggle Button */}
-                        <button 
-                            onClick={() => setIsDark(!isDark)}
-                            className="fixed right-6 md:right-10 bottom-10 z-[150] w-12 h-12 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 backdrop-blur-lg flex items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-accent hover:border-accent transition-all shadow-lg hover:scale-110"
-                            aria-label="Toggle Theme"
-                        >
-                            {isDark ? <Icon name="sun" className="w-5 h-5" /> : <Icon name="moon" className="w-5 h-5" />}
-                        </button>
+                    <div class="p-8 md:p-10 rounded-lg border hover:border-bronze transition-all duration-700 group relative overflow-hidden bg-[#FFFFFF] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151] shadow-md hover:shadow-xl">
+                        <div class="absolute top-[-10%] right-[-10%] w-24 h-24 opacity-[0.05] pointer-events-none group-hover:opacity-10 transition-opacity rotate-12 text-[#000000] dark:text-[#FFFFFF]"><i data-cms-icon="metric_2_icon" data-lucide="box" class="w-full h-full"></i></div>
+                        <div class="flex justify-between items-start mb-8 md:mb-10 relative z-10">
+                            <div class="p-3 bg-bronze/15 border border-bronze/30 rounded-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm shrink-0">
+                                <i data-cms-icon="metric_2_icon" data-lucide="box" class="w-6 h-6 text-bronze"></i>
+                            </div>
+                            <span data-cms-text="metric_2_id" class="font-mono text-xs font-bold px-3 py-1.5 rounded-md border bg-[#F3F4F6] text-[#374151] border-[#D1D5DB] dark:bg-[#1F2937] dark:text-[#D1D5DB] dark:border-[#4B5563] whitespace-nowrap">MT-L2</span>
+                        </div>
+                        <p data-cms-text="metric_2_label" class="text-xs md:text-sm font-black tracking-[0.15em] text-[#1F2937] dark:text-[#E5E7EB] uppercase mb-2 relative z-10 break-words line-clamp-2">Material Logic</p>
+                        <div class="flex items-baseline gap-1 mb-6 md:mb-8 relative z-10">
+                            <span data-cms-text="metric_2_value" class="text-5xl md:text-6xl font-black tracking-tighter text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors duration-500">88</span>
+                            <span class="text-sm md:text-base font-bold text-bronze">%</span>
+                        </div>
+                        <div class="h-[4px] w-full rounded-full relative overflow-hidden bg-[#E5E7EB] dark:bg-[#374151]">
+                            <div class="absolute h-full bg-gradient-to-r from-bronze/50 to-bronze transition-all duration-[2000ms] ease-out w-0 group-hover:w-full" style="width: 88%" data-cms-style-width="metric_2_value"></div>
+                        </div>
+                    </div>
 
-                        {/* Navigation */}
-                        <nav className="fixed top-0 w-full p-6 md:px-12 md:py-8 flex justify-between items-center z-[150] backdrop-blur-sm bg-lightBg/30 dark:bg-darkBg/30 border-b border-neutral-200/50 dark:border-neutral-800/50">
-                            <div className="text-lg font-bold tracking-tighter flex items-center gap-4 group cursor-pointer">
-                                <div className="w-8 h-8 border-2 border-accent flex items-center justify-center rotate-45 group-hover:bg-accent transition-all duration-500">
-                                    <span className="text-xs -rotate-45 text-accent group-hover:text-white font-bold transition-colors">YA</span>
+                    <div class="p-8 md:p-10 rounded-lg border hover:border-bronze transition-all duration-700 group relative overflow-hidden bg-[#FFFFFF] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151] shadow-md hover:shadow-xl">
+                        <div class="absolute top-[-10%] right-[-10%] w-24 h-24 opacity-[0.05] pointer-events-none group-hover:opacity-10 transition-opacity rotate-12 text-[#000000] dark:text-[#FFFFFF]"><i data-cms-icon="metric_3_icon" data-lucide="leaf" class="w-full h-full"></i></div>
+                        <div class="flex justify-between items-start mb-8 md:mb-10 relative z-10">
+                            <div class="p-3 bg-bronze/15 border border-bronze/30 rounded-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm shrink-0">
+                                <i data-cms-icon="metric_3_icon" data-lucide="leaf" class="w-6 h-6 text-bronze"></i>
+                            </div>
+                            <span data-cms-text="metric_3_id" class="font-mono text-xs font-bold px-3 py-1.5 rounded-md border bg-[#F3F4F6] text-[#374151] border-[#D1D5DB] dark:bg-[#1F2937] dark:text-[#D1D5DB] dark:border-[#4B5563] whitespace-nowrap">SU-E5</span>
+                        </div>
+                        <p data-cms-text="metric_3_label" class="text-xs md:text-sm font-black tracking-[0.15em] text-[#1F2937] dark:text-[#E5E7EB] uppercase mb-2 relative z-10 break-words line-clamp-2">Sustainability Index</p>
+                        <div class="flex items-baseline gap-1 mb-6 md:mb-8 relative z-10">
+                            <span data-cms-text="metric_3_value" class="text-5xl md:text-6xl font-black tracking-tighter text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors duration-500">92</span>
+                            <span class="text-sm md:text-base font-bold text-bronze">%</span>
+                        </div>
+                        <div class="h-[4px] w-full rounded-full relative overflow-hidden bg-[#E5E7EB] dark:bg-[#374151]">
+                            <div class="absolute h-full bg-gradient-to-r from-bronze/50 to-bronze transition-all duration-[2000ms] ease-out w-0 group-hover:w-full" style="width: 92%" data-cms-style-width="metric_3_value"></div>
+                        </div>
+                    </div>
+
+                    <div class="p-8 md:p-10 rounded-lg border hover:border-bronze transition-all duration-700 group relative overflow-hidden bg-[#FFFFFF] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151] shadow-md hover:shadow-xl">
+                        <div class="absolute top-[-10%] right-[-10%] w-24 h-24 opacity-[0.05] pointer-events-none group-hover:opacity-10 transition-opacity rotate-12 text-[#000000] dark:text-[#FFFFFF]"><i data-cms-icon="metric_4_icon" data-lucide="scan" class="w-full h-full"></i></div>
+                        <div class="flex justify-between items-start mb-8 md:mb-10 relative z-10">
+                            <div class="p-3 bg-bronze/15 border border-bronze/30 rounded-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 shadow-sm shrink-0">
+                                <i data-cms-icon="metric_4_icon" data-lucide="scan" class="w-6 h-6 text-bronze"></i>
+                            </div>
+                            <span data-cms-text="metric_4_id" class="font-mono text-xs font-bold px-3 py-1.5 rounded-md border bg-[#F3F4F6] text-[#374151] border-[#D1D5DB] dark:bg-[#1F2937] dark:text-[#D1D5DB] dark:border-[#4B5563] whitespace-nowrap">VS-P1</span>
+                        </div>
+                        <p data-cms-text="metric_4_label" class="text-xs md:text-sm font-black tracking-[0.15em] text-[#1F2937] dark:text-[#E5E7EB] uppercase mb-2 relative z-10 break-words line-clamp-2">Visual Precision</p>
+                        <div class="flex items-baseline gap-1 mb-6 md:mb-8 relative z-10">
+                            <span data-cms-text="metric_4_value" class="text-5xl md:text-6xl font-black tracking-tighter text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors duration-500">99</span>
+                            <span class="text-sm md:text-base font-bold text-bronze">%</span>
+                        </div>
+                        <div class="h-[4px] w-full rounded-full relative overflow-hidden bg-[#E5E7EB] dark:bg-[#374151]">
+                            <div class="absolute h-full bg-gradient-to-r from-bronze/50 to-bronze transition-all duration-[2000ms] ease-out w-0 group-hover:w-full" style="width: 99%" data-cms-style-width="metric_4_value"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none overflow-hidden opacity-[0.1] dark:opacity-[0.08]" aria-hidden="true">
+                <div class="absolute top-1/2 left-0 w-full h-[2px] bg-bronze"></div>
+                <div class="absolute top-0 left-1/4 w-[2px] h-full bg-bronze"></div>
+                <div class="absolute top-0 right-1/4 w-[2px] h-full bg-bronze"></div>
+                <div class="absolute top-[10%] left-[10%] w-24 h-24 border-2 border-bronze rounded-full border-dashed"></div>
+            </div>
+        </section>
+
+        <section id="about" class="py-24 md:py-32 px-6 md:px-12">
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
+                <div class="lg:col-span-5 relative group reveal-left">
+                    <div class="aspect-[4/5] overflow-hidden rounded-md border-2 shadow-2xl relative border-[#E5E7EB] dark:border-[#374151]">
+                        <img data-cms-src="about_image" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=1200" loading="lazy" decoding="async" class="w-full h-full object-cover grayscale opacity-90 group-hover:scale-[1.03] transition-transform duration-[1500ms] ease-out" alt="Architectural Building" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#F9FAFB]/90 dark:from-[#050507]/90 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-8 -right-8 p-8 w-72 hidden lg:block shadow-[0_20px_40px_rgba(0,0,0,0.15)] border-l-2 border-b-2 border-bronze/40 backdrop-blur-xl bg-[#FFFFFF]/90 dark:bg-[#111827]/90">
+                        <p data-cms-text="about_quote" class="text-sm md:text-base font-semibold italic leading-relaxed text-[#374151] dark:text-[#E5E7EB]">"স্থাপত্য কেবল দেয়াল আর ছাদ নয়, এটি একটি অনুভূতি।"</p>
+                        <div class="h-[2px] w-12 bg-bronze my-5"></div>
+                        <p data-cms-text="about_author" class="text-xs md:text-sm font-black uppercase tracking-widest text-bronze">- ইয়াসমিন আক্তার লিজা</p>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-7 space-y-12 reveal-right">
+                    <div class="space-y-6">
+                        <h2 class="text-xs md:text-sm tracking-[0.4em] md:tracking-[0.6em] uppercase text-bronze font-black flex items-center gap-4">
+                            <span class="h-[2px] w-8 bg-bronze"></span> <span data-cms-text="about_tag">Manifesto // ইশতেহার</span>
+                        </h2>
+                        <h3 data-cms-text="about_title" class="text-4xl md:text-5xl lg:text-6xl font-serif leading-tight font-bold text-[#111827] dark:text-[#FFFFFF] break-words">নতুন দিনের স্থাপত্য ভাবনা।</h3>
+                        <p data-cms-text="about_desc" class="text-base md:text-lg text-[#4B5563] dark:text-[#D1D5DB] leading-relaxed font-medium max-w-2xl break-words">আমাদের কাজ কেবল ভবন নির্মাণ নয়, বরং পরিবেশের সাথে একাত্ম হয়ে মানুষের জীবনযাত্রাকে সহজতর করা।</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-6 pt-10 border-t-2 border-[#E5E7EB] dark:border-[#374151] reveal-up">
+                        <div>
+                            <h5 data-cms-text="stat_1_value" class="text-3xl md:text-4xl font-black text-bronze mb-2 drop-shadow-sm">20+</h5>
+                            <p data-cms-text="stat_1_label" class="text-xs md:text-sm uppercase font-black text-[#374151] dark:text-[#E5E7EB] tracking-wider break-words">প্রকল্প সম্পন্ন</p>
+                        </div>
+                        <div>
+                            <h5 data-cms-text="stat_2_value" class="text-3xl md:text-4xl font-black text-bronze mb-2 drop-shadow-sm">2.4</h5>
+                            <p data-cms-text="stat_2_label" class="text-xs md:text-sm uppercase font-black text-[#374151] dark:text-[#E5E7EB] tracking-wider break-words">বছরের অভিজ্ঞতা</p>
+                        </div>
+                        <div>
+                            <h5 data-cms-text="stat_3_value" class="text-3xl md:text-4xl font-black text-bronze mb-2 drop-shadow-sm">100%</h5>
+                            <p data-cms-text="stat_3_label" class="text-xs md:text-sm uppercase font-black text-[#374151] dark:text-[#E5E7EB] tracking-wider break-words">সন্তুষ্টি</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32 border-y bg-[#FFFFFF] border-[#E5E7EB] dark:bg-[#0A0A0C] dark:border-[#1F2937]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="mb-16 md:mb-24 text-center flex flex-col items-center reveal-up">
+                    <h2 data-cms-text="cap_tag" class="text-xs md:text-sm tracking-[0.4em] md:tracking-[0.6em] uppercase text-bronze font-black mb-4 break-words">Capabilities</h2>
+                    <h3 class="text-4xl md:text-5xl lg:text-6xl font-serif italic tracking-tight font-bold text-[#111827] dark:text-[#FFFFFF] break-words"><span data-cms-text="cap_title_1">কিভাবে আমরা</span> <span data-cms-text="cap_highlight" class="font-sans font-black not-italic text-bronze drop-shadow-sm">পরিবর্তন</span> <span data-cms-text="cap_title_2">আনি।</span></h3>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 reveal-up">
+                    <div class="p-10 md:p-12 border-2 hover:border-bronze transition-all duration-700 group text-left relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl bg-[#F8F9FA] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151]">
+                        <div class="absolute bottom-0 right-0 w-32 h-32 bg-bronze/10 blur-3xl rounded-full translate-x-1/2 translate-y-1/2 group-hover:bg-bronze/20 transition-all duration-700"></div>
+                        <i data-cms-icon="cap_1_icon" data-lucide="pencil-ruler" class="w-10 h-10 text-bronze mb-8 group-hover:-translate-y-2 group-hover:rotate-6 transition-transform duration-500 drop-shadow-sm"></i>
+                        <h4 data-cms-text="cap_1_title" class="text-xl md:text-2xl font-black uppercase tracking-tighter mb-4 text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors break-words">Concept Planning</h4>
+                        <p data-cms-text="cap_1_desc" class="text-sm md:text-base text-[#4B5563] dark:text-[#D1D5DB] font-medium leading-relaxed break-words">আপনার স্বপ্নের প্রথম ধাপটি আমরা নিখুঁতভাবে পরিকল্পনা করি।</p>
+                    </div>
+                    <div class="p-10 md:p-12 border-2 hover:border-bronze transition-all duration-700 group text-left relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl bg-[#F8F9FA] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151]">
+                        <i data-cms-icon="cap_2_icon" data-lucide="box" class="w-10 h-10 text-bronze mb-8 group-hover:-translate-y-2 group-hover:rotate-6 transition-transform duration-500 drop-shadow-sm"></i>
+                        <h4 data-cms-text="cap_2_title" class="text-xl md:text-2xl font-black uppercase tracking-tighter mb-4 text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors break-words">3D Visualization</h4>
+                        <p data-cms-text="cap_2_desc" class="text-sm md:text-base text-[#4B5563] dark:text-[#D1D5DB] font-medium leading-relaxed break-words">নির্মাণের আগেই বাস্তবসম্মত ত্রিমাত্রিক রূপ দেখুন।</p>
+                    </div>
+                    <div class="p-10 md:p-12 border-2 hover:border-bronze transition-all duration-700 group text-left relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl bg-[#F8F9FA] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151]">
+                        <i data-cms-icon="cap_3_icon" data-lucide="home" class="w-10 h-10 text-bronze mb-8 group-hover:-translate-y-2 group-hover:rotate-6 transition-transform duration-500 drop-shadow-sm"></i>
+                        <h4 data-cms-text="cap_3_title" class="text-xl md:text-2xl font-black uppercase tracking-tighter mb-4 text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors break-words">Exterior Design</h4>
+                        <p data-cms-text="cap_3_desc" class="text-sm md:text-base text-[#4B5563] dark:text-[#D1D5DB] font-medium leading-relaxed break-words">ভবনের বাইরের দিকটি আধুনিক ও রুচিশীল করে তোলা।</p>
+                    </div>
+                    <div class="p-10 md:p-12 border-2 hover:border-bronze transition-all duration-700 group text-left relative overflow-hidden rounded-xl shadow-md hover:shadow-2xl bg-[#F8F9FA] border-[#E5E7EB] dark:bg-[#111827] dark:border-[#374151]">
+                        <i data-cms-icon="cap_4_icon" data-lucide="palette" class="w-10 h-10 text-bronze mb-8 group-hover:-translate-y-2 group-hover:rotate-6 transition-transform duration-500 drop-shadow-sm"></i>
+                        <h4 data-cms-text="cap_4_title" class="text-xl md:text-2xl font-black uppercase tracking-tighter mb-4 text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors break-words">Interior Design</h4>
+                        <p data-cms-text="cap_4_desc" class="text-sm md:text-base text-[#4B5563] dark:text-[#D1D5DB] font-medium leading-relaxed break-words">ভেতরের প্রতিটি কোণে আভিজাত্যের ছোঁয়া।</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-24 md:py-32 border-t-2 border-[#E5E7EB] dark:border-[#1F2937]">
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-16 md:mb-20 text-center reveal-up">
+                    <h2 data-cms-text="road_tag" class="text-xs md:text-sm tracking-[0.4em] md:tracking-[0.6em] uppercase text-bronze font-black mb-4 break-words">Roadmap</h2>
+                    <h3 data-cms-text="road_title" class="text-4xl md:text-5xl lg:text-6xl font-serif italic font-bold text-[#111827] dark:text-[#FFFFFF] break-words">শিক্ষা ও ক্যারিয়ার যাত্রা।</h3>
+                </div>
+                
+                <div class="relative border-l-2 border-[#D1D5DB] dark:border-[#374151] ml-4 md:ml-8 space-y-12 md:space-y-16 reveal-up">
+                    <div class="relative pl-8 md:pl-12 group transition-all duration-500 p-6 md:p-8 rounded-2xl border-2 border-transparent hover:bg-[#FFFFFF] hover:border-[#E5E7EB] hover:shadow-lg dark:hover:bg-[#111827] dark:hover:border-[#374151] dark:hover:shadow-2xl">
+                        <div class="absolute top-10 left-[calc(-7px)] w-3 h-3 rounded-full group-hover:bg-bronze group-hover:scale-150 transition-all duration-500 ring-[6px] bg-[#9CA3AF] ring-[#F8F9FA] dark:bg-[#6B7280] dark:ring-[#050507]"></div>
+                        
+                        <div class="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 items-start w-full">
+                            <div class="shrink-0 md:min-w-[160px] lg:min-w-[190px]">
+                                <span data-cms-text="road_1_year" class="text-4xl md:text-5xl font-serif italic font-bold text-bronze opacity-80 group-hover:opacity-100 transition-all duration-700 block md:mt-[-4px] tracking-wide break-all md:break-normal">Present</span>
+                            </div>
+                            
+                            <div class="flex-1 shrink-0 md:min-w-[220px] lg:min-w-[260px]">
+                                <h4 data-cms-text="road_1_title" class="text-xl md:text-2xl font-black uppercase tracking-tight mb-3 text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors duration-500 break-words">Junior Architect</h4>
+                                <div class="flex items-start md:items-center gap-3">
+                                    <span class="w-8 h-[2px] bg-bronze/60 mt-2 md:mt-0 shrink-0"></span>
+                                    <p data-cms-text="road_1_loc" class="text-xs md:text-sm uppercase font-black text-[#4B5563] dark:text-[#D1D5DB] tracking-[0.1em] break-words">Archvista Design Studio</p>
                                 </div>
-                                <span className="text-xs tracking-[0.25em] uppercase hidden sm:block font-semibold">Arch Studio</span>
                             </div>
-                            <div className="flex gap-8 items-center text-xs uppercase tracking-[0.2em] font-semibold">
-                                <a href="#manifesto" className="hover:text-accent transition-colors">Manifesto</a>
-                                <a href="#contact" className="bg-neutral-900 text-white dark:bg-white dark:text-black px-6 py-2.5 rounded-sm hover:bg-accent dark:hover:bg-accent hover:text-white dark:hover:text-white transition-all shadow-md">Let's Talk</a>
-                            </div>
-                        </nav>
-
-                        {/* Vertical Side Info (Desktop) */}
-                        <div className="fixed left-8 bottom-12 z-[60] vertical-rl hidden xl:block opacity-40 hover:opacity-100 transition-opacity">
-                            <div className="flex items-center gap-6 rotate-180">
-                                <p className="text-[10px] tracking-[0.4em] uppercase font-semibold">Yasmin Akter Liza</p>
-                                <span className="w-8 h-[1px] bg-accent/50"></span>
-                                <p className="text-[10px] tracking-[0.4em] uppercase text-accent font-bold">BD. 2026</p>
+                            
+                            <div class="flex-1 mt-2 md:mt-0">
+                                <p data-cms-text="road_1_desc" class="text-[#374151] dark:text-[#E5E7EB] font-medium leading-relaxed text-sm md:text-base break-words">বর্তমানে আমরা আবাসিক ও বাণিজ্যিক প্রকল্পের লিড ডিজাইনার হিসেবে কাজ করছি।</p>
                             </div>
                         </div>
-
-                        {/* 1. Hero Section */}
-                        <section className="relative min-h-screen w-full flex flex-col items-center justify-center pt-20 px-6 overflow-hidden">
-                            
-                            {/* Dynamic Dimensions Labels (Desktop) */}
-                            <div className="absolute z-30 w-full max-w-5xl h-[600px] pointer-events-none opacity-30 hidden lg:block text-accent font-mono text-[10px]">
-                                <div className="absolute top-[20%] left-[10%] w-[80%] h-[1px] bg-accent/20 flex justify-center items-center">
-                                    <span ref={dimXRef} className="bg-lightBg dark:bg-darkBg px-3 tracking-widest transition-colors duration-500">X: 0.00</span>
-                                </div>
-                                <div className="absolute top-[10%] left-[20%] w-[1px] h-[80%] bg-accent/20 flex justify-center items-center">
-                                    <span ref={dimYRef} className="bg-lightBg dark:bg-darkBg py-3 tracking-widest vertical-rl rotate-180 transition-colors duration-500">Y: 0.00</span>
-                                </div>
-                            </div>
-
-                            {/* 3D Glassmorphism Core */}
-                            <div 
-                                ref={cardRef}
-                                className="absolute z-10 w-[280px] h-[400px] sm:w-[350px] sm:h-[500px] md:w-[420px] md:h-[600px] border border-neutral-300 dark:border-neutral-800 bg-white/10 dark:bg-white/5 backdrop-blur-xl transition-transform duration-75 ease-linear shadow-2xl rounded-sm will-change-transform"
-                                style={{ transformStyle: 'preserve-3d' }}
-                            >
-                                <div className="absolute inset-0 border-l border-neutral-300 dark:border-neutral-700 [transform:translateZ(40px)]"></div>
-                                <div className="absolute inset-0 border-t border-accent/40 [transform:translateZ(-40px)]"></div>
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-accent/20 blur-[60px] rounded-full"></div>
-                            </div>
-
-                            {/* Hero Typography */}
-                            <FadeInSection className="z-40 text-center relative w-full mix-blend-difference dark:mix-blend-normal">
-                                <p className="text-xs tracking-[0.4em] uppercase text-accent mb-8 font-bold flex items-center justify-center gap-3">
-                                    <Icon name="scan-line" className="w-4 h-4" /> Spatial Visionary
-                                </p>
-                                
-                                <h1 className="text-[14vw] md:text-[9vw] lg:text-[7.5vw] font-serif font-light leading-[0.9] tracking-tight italic">
-                                    Yasmin <span className={isDark ? "text-outline-dark font-sans font-extrabold not-italic" : "text-outline-light font-sans font-extrabold not-italic"}>Akter</span>
-                                </h1>
-                                <h1 className="text-[14vw] md:text-[9vw] lg:text-[7.5vw] font-extrabold leading-[0.9] tracking-tighter mt-1">
-                                    Liza.
-                                </h1>
-                                
-                                <div className="mt-14 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10">
-                                    <div className="flex items-center gap-3 group">
-                                        <Icon name="box" className="w-4 h-4 text-accent group-hover:rotate-12 transition-transform" />
-                                        <p className="text-[11px] tracking-[0.2em] uppercase font-medium text-neutral-600 dark:text-neutral-400">Exterior Design</p>
-                                    </div>
-                                    <span className="hidden sm:block w-1 h-1 bg-accent/50 rounded-full"></span>
-                                    <div className="flex items-center gap-3 group">
-                                        <Icon name="layout-template" className="w-4 h-4 text-accent group-hover:scale-110 transition-transform" />
-                                        <p className="text-[11px] tracking-[0.2em] uppercase font-medium text-neutral-600 dark:text-neutral-400">Interior Planning</p>
-                                    </div>
-                                </div>
-                            </FadeInSection>
-                        </section>
-
-                        {/* 2. Metrics Section */}
-                        <section className="py-16 md:py-20 px-6 md:px-12 relative z-40">
-                            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 border border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden shadow-sm dark:shadow-2xl bg-white dark:bg-[#0a0a0a] transition-colors duration-500">
-                                <MetricCard count="20+" label="Built Projects" sub="Commercial & Residential Execution" delay={0} iconName="building" />
-                                <MetricCard count="2.4" label="Years Exp." sub="At Archvista Design Studio" delay={150} iconName="ruler" />
-                                <MetricCard count="100%" label="Design Quality" sub="Delivering Premium Spatial Experiences" delay={300} iconName="star" isLast={true} />
-                            </div>
-                        </section>
-
-                        {/* 3. Manifesto / Biography */}
-                        <section id="manifesto" className="py-20 md:py-32 px-6 md:px-12 relative z-40 bg-white/50 dark:bg-[#080808]/50 border-y border-neutral-200 dark:border-neutral-900 transition-colors">
-                            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
-                                
-                                <div className="lg:col-span-5 relative group order-2 lg:order-1">
-                                    <FadeInSection direction="left">
-                                        <div className="relative aspect-[3/4] rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800 shadow-xl">
-                                            <img 
-                                                src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200" 
-                                                alt="Architecture Presentation" 
-                                                className="absolute inset-0 w-full h-full object-cover grayscale opacity-80 group-hover:scale-105 transition-all duration-700"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-                                            
-                                            <div className="absolute bottom-8 left-8 right-8 text-white">
-                                                <h4 className="text-3xl md:text-4xl font-serif italic mb-2 tracking-tight">Yasmin Akter</h4>
-                                                <p className="text-[10px] tracking-[0.2em] uppercase text-neutral-300 font-semibold mb-4">Principal Architect</p>
-                                                <div className="h-[1px] w-full bg-white/20 mb-4"></div>
-                                                <p className="text-[10px] text-accent tracking-[0.3em] font-bold uppercase italic">"Inspired by Structure"</p>
-                                            </div>
-                                        </div>
-                                    </FadeInSection>
-                                </div>
-                                
-                                <div className="lg:col-span-7 space-y-10 order-1 lg:order-2">
-                                    <FadeInSection>
-                                        <h2 className="text-[11px] tracking-[0.3em] uppercase text-neutral-500 font-bold mb-6 flex items-center gap-4">
-                                            <span className="w-8 h-[2px] bg-accent"></span> The Manifesto
-                                        </h2>
-                                        <h3 className="text-4xl sm:text-5xl md:text-6xl font-serif font-light leading-[1.1]">
-                                            Designing for the <span className="italic text-accent shimmer font-medium">future</span> of Bangladesh.
-                                        </h3>
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 text-neutral-600 dark:text-neutral-400 font-normal text-sm md:text-base leading-relaxed">
-                                            <p>Based in the heart of <strong className="text-neutral-900 dark:text-neutral-100 font-semibold">Mirpur, Dhaka</strong>, I have spent the last 2.4 years bridging the gap between artistic vision and structural feasibility. My role involves overseeing a diverse portfolio of 20+ built works.</p>
-                                            <p>My philosophy is rooted in <strong className="text-neutral-900 dark:text-neutral-100 font-semibold">Material Honesty</strong> and <strong className="text-neutral-900 dark:text-neutral-100 font-semibold">Spatial Efficiency</strong>. I believe a project is successful when it evokes true emotion and architectural brilliance.</p>
-                                        </div>
-                                    </FadeInSection>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* 4. Timeline Section */}
-                        <section className="py-20 md:py-32 px-6 md:px-12 relative z-40">
-                            <div className="max-w-7xl mx-auto">
-                                <FadeInSection className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-                                    <div>
-                                        <h2 className="text-[11px] tracking-[0.3em] uppercase text-accent font-bold mb-4">Blueprint of Growth</h2>
-                                        <h3 className="text-4xl md:text-6xl font-serif font-light italic leading-none">Career Roadmap</h3>
-                                    </div>
-                                    <p className="text-sm text-neutral-500 max-w-xs font-medium leading-relaxed">A structural timeline of academic journey and professional milestones.</p>
-                                </FadeInSection>
-
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-                                    <TimelineGroup title="Professional Record" iconName="briefcase" items={[
-                                        { title: "Junior Architect", subtitle: "Archvista Design Studio", date: "Present", desc: "Spearheading exterior designs and interior project management for premium residential complexes." }
-                                    ]} />
-                                    <TimelineGroup title="Education Pathway" iconName="graduation-cap" items={[
-                                        { title: "B.Sc in Architecture", subtitle: "Currently Running", date: "Ongoing", desc: "Focusing on parametric design, urban sustainability, and advanced building physics." },
-                                        { title: "Diploma in Architecture", subtitle: "Completed", date: "Honours", desc: "Specialized in structural drawings, material science, and building site operations." }
-                                    ]} />
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* 5. Contact Section */}
-                        <section id="contact" className="py-24 md:py-32 px-6 md:px-12 bg-neutral-900 text-white dark:bg-white dark:text-black relative z-40 rounded-t-[2.5rem] md:rounded-t-[4rem] transition-colors duration-500">
-                            <div className="max-w-5xl mx-auto text-center">
-                                <FadeInSection>
-                                    <h2 className="text-5xl md:text-7xl font-serif font-light leading-tight italic mb-8">
-                                        Let's Build your <br/> <span className="font-sans font-extrabold not-italic text-accent">Vision.</span>
-                                    </h2>
-                                    
-                                    <div className="bg-white/5 dark:bg-black/5 p-10 md:p-16 rounded-3xl backdrop-blur-md border border-white/10 dark:border-black/10 mt-12 shadow-2xl">
-                                        <p className="text-[11px] tracking-[0.3em] uppercase font-bold text-neutral-400 dark:text-neutral-500 mb-6">Official Channel</p>
-                                        
-                                        <a href="mailto:lyasminakter16@gmail.com" className="text-2xl sm:text-3xl md:text-5xl font-bold hover:text-accent transition-colors duration-300 break-all sm:break-normal">
-                                            lyasminakter16@gmail.com
-                                        </a>
-                                        
-                                        <div className="flex justify-center gap-8 mt-12 text-[11px] uppercase tracking-[0.2em] font-bold">
-                                            <a href="#" className="flex items-center gap-2 hover:text-accent transition-all group"><Icon name="linkedin" className="w-4 h-4 group-hover:-translate-y-1 transition-transform"/> LinkedIn</a>
-                                            <a href="#" className="flex items-center gap-2 hover:text-accent transition-all group"><Icon name="file-text" className="w-4 h-4 group-hover:-translate-y-1 transition-transform"/> Download CV</a>
-                                        </div>
-                                    </div>
-                                    
-                                    <div className="mt-16 flex items-center justify-center gap-3 text-neutral-400 dark:text-neutral-600">
-                                        <Icon name="map-pin" className="text-accent w-4 h-4" />
-                                        <p className="text-xs font-bold uppercase tracking-[0.2em]">Mirpur // Dhaka // BD</p>
-                                    </div>
-                                </FadeInSection>
-                            </div>
-                        </section>
-
-                        <footer className="py-8 px-6 bg-neutral-950 text-neutral-500 dark:bg-neutral-100 dark:text-neutral-500 text-[10px] uppercase tracking-[0.2em] font-bold flex flex-col md:flex-row justify-between items-center gap-4 text-center transition-colors">
-                            <p>© 2026 YASMIN AKTER LIZA</p>
-                            <p className="hidden md:block">Architectural Vision // Ver 6.0</p>
-                            <p>Designed for Excellence</p>
-                        </footer>
                     </div>
-                </>
-            );
+
+                    <div class="relative pl-8 md:pl-12 group transition-all duration-500 p-6 md:p-8 rounded-2xl border-2 border-transparent hover:bg-[#FFFFFF] hover:border-[#E5E7EB] hover:shadow-lg dark:hover:bg-[#111827] dark:hover:border-[#374151] dark:hover:shadow-2xl">
+                        <div class="absolute top-10 left-[calc(-7px)] w-3 h-3 rounded-full group-hover:bg-bronze group-hover:scale-150 transition-all duration-500 ring-[6px] bg-[#9CA3AF] ring-[#F8F9FA] dark:bg-[#6B7280] dark:ring-[#050507]"></div>
+                        
+                        <div class="flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-8 items-start w-full">
+                            <div class="shrink-0 md:min-w-[160px] lg:min-w-[190px]">
+                                <span data-cms-text="road_2_year" class="text-4xl md:text-5xl font-serif italic font-bold text-bronze opacity-80 group-hover:opacity-100 transition-all duration-700 block md:mt-[-4px] tracking-wide break-all md:break-normal">2024</span>
+                            </div>
+                            
+                            <div class="flex-1 shrink-0 md:min-w-[220px] lg:min-w-[260px]">
+                                <h4 data-cms-text="road_2_title" class="text-xl md:text-2xl font-black uppercase tracking-tight mb-3 text-[#111827] dark:text-[#FFFFFF] group-hover:text-bronze transition-colors duration-500 break-words">B.Sc in Architecture</h4>
+                                <div class="flex items-start md:items-center gap-3">
+                                    <span class="w-8 h-[2px] bg-bronze/60 mt-2 md:mt-0 shrink-0"></span>
+                                    <p data-cms-text="road_2_loc" class="text-xs md:text-sm uppercase font-black text-[#4B5563] dark:text-[#D1D5DB] tracking-[0.1em] break-words">Ongoing</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex-1 mt-2 md:mt-0">
+                                <p data-cms-text="road_2_desc" class="text-[#374151] dark:text-[#E5E7EB] font-medium leading-relaxed text-sm md:text-base break-words">উন্নত স্থাপত্য কৌশল এবং প্যারামেট্রিক ডিজাইনে বিশেষ পড়াশোনা।</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="py-32 md:py-40 px-6 bg-[#000000] text-[#FFFFFF] text-center relative overflow-hidden rounded-t-[3rem] md:rounded-t-[5rem]">
+            <div data-cms-text="contact_bg_text" class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[22vw] font-black opacity-[0.05] pointer-events-none select-none text-bronze drop-shadow-2xl">LIZA</div>
+            <div class="max-w-5xl mx-auto relative z-10 reveal-up">
+                <h2 data-cms-text="contact_title" class="text-5xl md:text-7xl lg:text-9xl font-black tracking-tighter mb-12 md:mb-16 text-[#FFFFFF] drop-shadow-md break-words">LET'S START.</h2>
+                
+                <a data-cms-href="email_link" href="mailto:lyasminakter16@gmail.com" class="group relative overflow-hidden bg-[#FFFFFF]/10 px-6 py-6 md:px-12 md:py-8 rounded-[2rem] flex flex-col sm:flex-row items-center justify-center gap-6 md:gap-8 mx-auto border-2 border-bronze/30 hover:border-bronze transition-all active:scale-95 shadow-[0_0_50px_rgba(205,127,50,0.15)] hover:shadow-[0_0_80px_rgba(205,127,50,0.4)] duration-500 w-full sm:w-auto max-w-[90vw] md:max-w-fit backdrop-blur-xl cursor-pointer" style="text-decoration: none;">
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-bronze to-[#8B4513] rounded-2xl flex items-center justify-center text-[#FFFFFF] shadow-2xl group-hover:rotate-[15deg] transition-transform duration-700 shrink-0">
+                        <i data-lucide="mail" class="w-8 h-8"></i>
+                    </div>
+                    <div class="text-center sm:text-left overflow-hidden">
+                        <p data-cms-text="contact_label" class="text-xs md:text-sm uppercase tracking-[0.3em] font-black text-bronze mb-2">Direct Channel</p>
+                        <h3 data-cms-text="email_text" class="text-lg sm:text-xl md:text-3xl lg:text-4xl font-serif italic font-bold text-[#FFFFFF] tracking-tight break-all">lyasminakter16@gmail.com</h3>
+                    </div>
+                    <i data-lucide="arrow-up-right" class="hidden sm:block ml-4 text-bronze opacity-50 group-hover:opacity-100 group-hover:translate-x-2 group-hover:-translate-y-2 transition-all duration-500 w-10 h-10 shrink-0"></i>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="py-10 md:py-12 px-6 md:px-12 text-xs md:text-sm tracking-[0.2em] md:tracking-[0.3em] uppercase font-black flex flex-col md:flex-row justify-between items-center gap-6 border-t-2 bg-[#F8F9FA] border-[#E5E7EB] text-[#4B5563] dark:bg-[#050507] dark:border-[#1F2937] dark:text-[#9CA3AF]">
+        <p data-cms-text="footer_copyright" class="break-words text-center md:text-left">© 2026 Yasmin Akter Liza Studio</p>
+        <div class="flex flex-wrap justify-center gap-8 md:gap-12">
+            <a data-cms-text="social_1_text" data-cms-href="social_1_link" href="#" target="_blank" rel="noopener noreferrer" class="hover:text-bronze transition-colors pb-1 border-b-2 border-transparent hover:border-bronze shrink-0">LinkedIn</a>
+            <a data-cms-text="social_2_text" data-cms-href="social_2_link" href="#" target="_blank" rel="noopener noreferrer" class="hover:text-bronze transition-colors pb-1 border-b-2 border-transparent hover:border-bronze shrink-0">Behance</a>
+        </div>
+        <p data-cms-text="footer_version" class="opacity-80 font-mono tracking-widest text-[#374151] dark:text-[#E5E7EB] break-words text-center md:text-right">Architecture V8.4 // 2026</p>
+    </footer>
+
+    <script>
+        // ----------------------------------------------------------------
+        // Google Sheets Headless CMS Engine
+        // ----------------------------------------------------------------
+        
+        const CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR7FP16pzKLNjJjYl_mlLWZJqGzF-tBgi7JeeWeHGelRd08CfxXvcOeo28BzFKGG2IBN-AhI3lmBWwQ/pub?gid=0&single=true&output=csv"; 
+
+        async function loadCMSData() {
+            if (!CSV_URL.includes("google.com")) return;
+            
+            try {
+                const response = await fetch(CSV_URL);
+                const csvText = await response.text();
+                
+                const rows = csvText.split('\n').map(row => {
+                    const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
+                    return row.split(regex).map(val => val.replace(/^"|"$/g, '').trim());
+                });
+
+                const data = {};
+                rows.forEach(r => {
+                    if (r.length >= 2 && r[0]) {
+                        data[r[0]] = r[1];
+                    }
+                });
+
+                for (const [key, value] of Object.entries(data)) {
+                    if (!value) continue;
+
+                    document.querySelectorAll(`[data-cms-text="${key}"]`).forEach(el => {
+                        el.innerText = value;
+                    });
+                    document.querySelectorAll(`[data-cms-src="${key}"]`).forEach(el => {
+                        el.src = value;
+                    });
+                    document.querySelectorAll(`[data-cms-href="${key}"]`).forEach(el => {
+                        el.href = value;
+                    });
+                    document.querySelectorAll(`[data-cms-icon="${key}"]`).forEach(el => {
+                        el.setAttribute('data-lucide', value);
+                    });
+                    document.querySelectorAll(`[data-cms-style-width="${key}"]`).forEach(el => {
+                        el.style.width = `${value}%`;
+                    });
+                }
+                
+                lucide.createIcons();
+
+            } catch (error) {
+                console.error("CMS Load Error:", error);
+            }
         }
 
-        // --- Custom UI Components ---
-        const MetricCard = ({ count, label, sub, iconName, delay, isLast }) => {
-            const borderClasses = isLast ? "" : "border-b md:border-b-0 md:border-r border-neutral-200 dark:border-neutral-800";
-            return (
-                <FadeInSection delay={delay} className={`p-8 md:p-12 hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors duration-300 group ${borderClasses}`}>
-                    <div className="text-accent mb-6 group-hover:scale-110 transition-transform duration-300 transform origin-left">
-                        <Icon name={iconName} className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <h3 className="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight group-hover:text-accent transition-colors">{count}</h3>
-                    <p className="text-[11px] font-bold tracking-[0.2em] uppercase mb-2">{label}</p>
-                    <p className="text-[13px] text-neutral-500 font-medium leading-relaxed">{sub}</p>
-                </FadeInSection>
-            );
+        loadCMSData();
+
+        // ----------------------------------------------------------------
+        // UI Interaction Scripts
+        // ----------------------------------------------------------------
+        
+        lucide.createIcons();
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            if(html.classList.contains('dark')) {
+                themeIcon.setAttribute('data-lucide', 'sun');
+            } else {
+                themeIcon.setAttribute('data-lucide', 'moon');
+            }
+            lucide.createIcons();
+        });
+
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorH = document.getElementById('cursor-h');
+        const cursorV = document.getElementById('cursor-v');
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        if (!isTouch) {
+            window.addEventListener('mousemove', (e) => {
+                requestAnimationFrame(() => {
+                    const { clientX: x, clientY: y } = e;
+                    if(cursorDot) cursorDot.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+                    if(cursorH) cursorH.style.transform = `translateY(${y}px)`;
+                    if(cursorV) cursorV.style.transform = `translateX(${x}px)`;
+                });
+            });
+        }
+
+        const scrollProgress = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            if(height > 0) {
+                scrollProgress.style.width = `${(winScroll / height) * 100}%`;
+            }
+        });
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
         };
 
-        const TimelineGroup = ({ title, iconName, items }) => {
-            return (
-                <div className="flex flex-col gap-8">
-                    <div className="flex items-center gap-4 text-accent">
-                        <div className="p-3 bg-neutral-100 dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800"><Icon name={iconName} className="w-5 h-5" /></div>
-                        <h4 className="text-xs tracking-[0.2em] uppercase font-bold text-neutral-900 dark:text-neutral-100">{title}</h4>
-                    </div>
-                    <div className="border-l-2 border-neutral-200 dark:border-neutral-800 pl-8 space-y-10 ml-5">
-                        {items.map((item, i) => (
-                            <div key={i} className="relative group">
-                                <div className="absolute -left-[41px] top-1.5 w-4 h-4 bg-lightBg dark:bg-darkBg border-2 border-accent rounded-full group-hover:bg-accent transition-colors duration-300 shadow-[0_0_10px_rgba(205,127,50,0.2)]"></div>
-                                
-                                <h5 className="text-xl md:text-2xl font-bold tracking-tight mb-1 group-hover:text-accent transition-colors duration-300">{item.title}</h5>
-                                <div className="flex items-center gap-3 mb-3">
-                                    <span className="text-[11px] font-bold text-accent tracking-[0.1em] uppercase">{item.subtitle}</span>
-                                    <span className="w-1 h-1 bg-neutral-300 rounded-full"></span>
-                                    <span className="text-[11px] text-neutral-500 font-mono font-medium">{item.date}</span>
-                                </div>
-                                <p className="text-[14px] text-neutral-600 dark:text-neutral-400 font-medium leading-relaxed max-w-sm">{item.desc}</p>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            );
-        };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right').forEach(el => {
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
