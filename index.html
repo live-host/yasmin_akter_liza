@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Yasmin Akter Liza - Professional Architecture Portfolio showcasing exterior design, interior planning, and built projects in Bangladesh.">
     <title>Yasmin Akter Liza | Architecture Portfolio</title>
     
-    <!-- React, ReactDOM, Babel, Tailwind and Lucide Icons Scripts -->
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -13,35 +13,36 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap');
         
         html { scroll-behavior: smooth; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080808; margin: 0; overflow-x: hidden; }
         .font-serif { font-family: 'Cormorant Garamond', serif; }
         
-        /* Subtle Grain Texture */
+        /* Optimized Subtle Grain Texture - Disabled on small screens for performance */
         .grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.05; pointer-events: none; z-index: 100;
+            opacity: 0.04; pointer-events: none; z-index: 100;
         }
         
-        /* Custom Architectural Cursors */
+        /* Custom Architectural Cursors - Hardware Accelerated */
         .custom-cursor {
             position: fixed; top: 0; left: 0; width: 36px; height: 36px;
             border: 1px solid rgba(205, 127, 50, 0.4); border-radius: 50%;
-            transform: translate(-50%, -50%); pointer-events: none; z-index: 200;
-            transition: width 0.2s, height 0.2s;
+            pointer-events: none; z-index: 200;
+            will-change: transform;
         }
         .cursor-inner {
             position: fixed; top: 0; left: 0; width: 4px; height: 4px;
             background: #CD7F32; border-radius: 50%;
-            transform: translate(-50%, -50%); pointer-events: none; z-index: 201;
+            pointer-events: none; z-index: 201;
+            will-change: transform;
         }
-        .blueprint-line-h { position: fixed; left: 0; height: 1px; width: 100vw; background: rgba(255,255,255,0.02); pointer-events: none; z-index: 90; }
-        .blueprint-line-v { position: fixed; top: 0; width: 1px; height: 100vh; background: rgba(255,255,255,0.02); pointer-events: none; z-index: 90; }
+        .blueprint-line-h { position: fixed; top: 0; left: 0; height: 1px; width: 100vw; background: rgba(255,255,255,0.03); pointer-events: none; z-index: 90; will-change: transform; }
+        .blueprint-line-v { position: fixed; top: 0; left: 0; width: 1px; height: 100vh; background: rgba(255,255,255,0.03); pointer-events: none; z-index: 90; will-change: transform; }
         
-        .text-outline { -webkit-text-stroke: 1px rgba(255,255,255,0.08); color: transparent; }
+        .text-outline { -webkit-text-stroke: 1px rgba(255,255,255,0.15); color: transparent; }
         .vertical-rl { writing-mode: vertical-rl; }
         
         /* Golden Shimmer Effect */
@@ -50,17 +51,20 @@
             100% { background-position: 200% 0; }
         }
         .shimmer {
-            background: linear-gradient(90deg, #111, #CD7F32, #111);
+            background: linear-gradient(90deg, #222, #CD7F32, #222);
             background-size: 200% 100%;
             animation: shimmer 4s infinite linear;
             -webkit-background-clip: text;
             color: transparent;
         }
         
-        /* Hide Default Cursor on Desktop */
+        /* Hide Default Cursor on Desktop and disable heavy effects on mobile */
         @media (min-width: 1024px) {
-            .cursor-none-lg { cursor: none !important; }
+            body { cursor: none !important; }
             a, button { cursor: none !important; }
+        }
+        @media (max-width: 768px) {
+            .grain { display: none; } /* Saves battery and CPU on mobile */
         }
     </style>
 </head>
@@ -70,7 +74,7 @@
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- Optimized Lucide Icon Adapter (Fixes React DOM Conflict) ---
+        // --- Optimized Lucide Icon Adapter ---
         const Icon = ({ name, className = "" }) => {
             const spanRef = useRef(null);
             
@@ -93,6 +97,7 @@
                 const observer = new IntersectionObserver(([entry]) => {
                     if (entry.isIntersecting) {
                         setIsVisible(true);
+                        observer.unobserve(entry.target); // Stop observing once visible for performance
                     }
                 }, { threshold: 0.1, ...options });
 
@@ -113,9 +118,9 @@
             
             const getTranslate = () => {
                 switch(direction) {
-                    case 'left': return 'translate-x-8 md:translate-x-16';
-                    case 'right': return '-translate-x-8 md:-translate-x-16';
-                    default: return 'translate-y-12 md:translate-y-16';
+                    case 'left': return 'translate-x-8 md:translate-x-12';
+                    case 'right': return '-translate-x-8 md:-translate-x-12';
+                    default: return 'translate-y-10 md:translate-y-12';
                 }
             };
 
@@ -133,52 +138,90 @@
         };
 
         function App() {
-            const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-            const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+            // Refs for direct DOM manipulation (Fixes React re-render performance issue)
+            const cursorRef = useRef(null);
+            const cursorInnerRef = useRef(null);
+            const lineHRef = useRef(null);
+            const lineVRef = useRef(null);
+            const cardRef = useRef(null);
+            const dimXRef = useRef(null);
+            const dimYRef = useRef(null);
 
-            // Handle Mouse Move for Interactive Elements
+            // Handle Mouse Move without triggering React State Re-renders
             useEffect(() => {
+                // Only run custom cursor logic on non-touch devices
+                const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+                if (isTouchDevice) return;
+
+                let animationFrameId;
+
                 const handleMove = (e) => {
-                    setMousePos({
-                        x: (e.clientX / window.innerWidth - 0.5) * 35,
-                        y: (e.clientY / window.innerHeight - 0.5) * 35,
+                    // Use requestAnimationFrame for smooth 60fps performance
+                    animationFrameId = requestAnimationFrame(() => {
+                        const x = e.clientX;
+                        const y = e.clientY;
+                        
+                        // Update Cursors & Lines directly
+                        if (cursorRef.current) cursorRef.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+                        if (cursorInnerRef.current) cursorInnerRef.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+                        if (lineHRef.current) lineHRef.current.style.transform = `translateY(${y}px)`;
+                        if (lineVRef.current) lineVRef.current.style.transform = `translateX(${x}px)`;
+
+                        // 3D Card Math
+                        const centerX = window.innerWidth / 2;
+                        const centerY = window.innerHeight / 2;
+                        const rotateX = ((y - centerY) / centerY) * -15; // Limit rotation to 15 degrees
+                        const rotateY = ((x - centerX) / centerX) * 15;
+
+                        if (cardRef.current) {
+                            cardRef.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
+                        }
+
+                        // Update Dimension Labels
+                        if (dimXRef.current) dimXRef.current.innerText = `Dim_X: ${Math.abs(rotateY * 2).toFixed(2)}`;
+                        if (dimYRef.current) dimYRef.current.innerText = `Dim_Y: ${Math.abs(rotateX * 2).toFixed(2)}`;
                     });
-                    setCursorPos({ x: e.clientX, y: e.clientY });
                 };
-                window.addEventListener('mousemove', handleMove);
-                return () => window.removeEventListener('mousemove', handleMove);
+
+                window.addEventListener('mousemove', handleMove, { passive: true });
+                return () => {
+                    window.removeEventListener('mousemove', handleMove);
+                    cancelAnimationFrame(animationFrameId);
+                };
             }, []);
 
             return (
-                <div className="min-h-screen text-[#f0f0f0] cursor-none-lg relative selection:bg-[#CD7F32] selection:text-white">
+                <div className="min-h-screen text-[#f0f0f0] relative selection:bg-[#CD7F32] selection:text-white">
                     <div className="grain"></div>
                     
                     {/* Custom Cursor UI (Desktop Only) */}
-                    <div className="custom-cursor hidden lg:block" style={{ left: cursorPos.x, top: cursorPos.y }}></div>
-                    <div className="cursor-inner hidden lg:block" style={{ left: cursorPos.x, top: cursorPos.y }}></div>
-                    <div className="blueprint-line-h hidden lg:block" style={{ top: cursorPos.y }}></div>
-                    <div className="blueprint-line-v hidden lg:block" style={{ left: cursorPos.x }}></div>
+                    <div className="hidden lg:block">
+                        <div ref={cursorRef} className="custom-cursor"></div>
+                        <div ref={cursorInnerRef} className="cursor-inner"></div>
+                        <div ref={lineHRef} className="blueprint-line-h"></div>
+                        <div ref={lineVRef} className="blueprint-line-v"></div>
+                    </div>
 
                     {/* Vertical Side Info */}
                     <div className="fixed left-8 bottom-12 z-[60] vertical-rl hidden xl:block opacity-60 hover:opacity-100 transition-opacity">
                         <div className="flex items-center gap-6 rotate-180">
-                            <p className="text-[10px] tracking-[0.5em] uppercase text-gray-400 font-bold">Yasmin Akter Liza</p>
+                            <p className="text-xs tracking-[0.4em] uppercase text-gray-400 font-bold">Yasmin Akter Liza</p>
                             <span className="w-12 h-[1px] bg-[#CD7F32]/50"></span>
-                            <p className="text-[10px] tracking-[0.5em] uppercase text-[#CD7F32] font-bold">Junior Architect</p>
+                            <p className="text-xs tracking-[0.4em] uppercase text-[#CD7F32] font-bold">Junior Architect</p>
                         </div>
                     </div>
 
                     {/* Navigation */}
                     <nav className="fixed top-0 w-full p-6 md:p-10 flex justify-between items-center z-[150] mix-blend-difference">
-                        <div className="text-lg md:text-xl font-bold tracking-tighter flex items-center gap-4 group cursor-pointer">
-                            <div className="w-6 h-6 md:w-8 md:h-8 border border-[#CD7F32] flex items-center justify-center rotate-45 group-hover:bg-[#CD7F32] transition-all duration-500">
-                                <span className="text-[8px] md:text-[10px] -rotate-45 text-[#CD7F32] group-hover:text-black font-bold">YA</span>
+                        <div className="text-lg md:text-xl font-bold tracking-tighter flex items-center gap-4 group">
+                            <div className="w-8 h-8 border border-[#CD7F32] flex items-center justify-center rotate-45 group-hover:bg-[#CD7F32] transition-all duration-500">
+                                <span className="text-xs -rotate-45 text-[#CD7F32] group-hover:text-black font-bold">YA</span>
                             </div>
-                            <span className="text-[10px] md:text-sm tracking-[0.3em] uppercase hidden sm:block">Architecture Studio</span>
+                            <span className="text-xs md:text-sm tracking-[0.2em] uppercase hidden sm:block">Architecture Studio</span>
                         </div>
-                        <div className="flex gap-6 md:gap-10 items-center text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.4em] font-extrabold text-white/70">
-                            <a href="#about" className="hover:text-[#CD7F32] transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-[#CD7F32] hover:after:w-full after:transition-all">Manifesto</a>
-                            <a href="#contact" className="hover:text-white transition-all bg-white/5 border border-white/10 px-6 py-2 md:px-8 md:py-3 rounded-sm backdrop-blur-xl hover:bg-[#CD7F32] hover:text-black hover:border-[#CD7F32]">Contact</a>
+                        <div className="flex gap-6 md:gap-10 items-center text-xs uppercase tracking-[0.2em] font-bold text-white/80">
+                            <a href="#about" aria-label="Go to Manifesto section" className="hover:text-[#CD7F32] transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-[#CD7F32] hover:after:w-full after:transition-all">Manifesto</a>
+                            <a href="#contact" aria-label="Go to Contact section" className="hover:text-white transition-all bg-white/5 border border-white/10 px-6 py-2 md:px-8 md:py-3 rounded-sm backdrop-blur-md hover:bg-[#CD7F32] hover:text-black hover:border-[#CD7F32]">Contact</a>
                         </div>
                     </nav>
 
@@ -186,67 +229,65 @@
                     <section className="relative min-h-screen w-full flex flex-col items-center justify-center pt-24 px-6 overflow-hidden">
                         
                         {/* Dynamic Dimensions Labels (Desktop Only) */}
-                        <div className="absolute z-30 w-full max-w-4xl h-[600px] pointer-events-none opacity-30 hidden lg:block">
+                        <div className="absolute z-30 w-full max-w-4xl h-[600px] pointer-events-none opacity-40 hidden lg:block">
                             <div className="absolute top-[20%] left-[10%] w-[80%] h-[1px] bg-white/20 flex justify-center items-center">
-                                <span className="bg-[#080808] px-3 font-mono text-[10px] text-[#CD7F32] tracking-widest uppercase">Dim_X: {Math.abs(mousePos.x * 2).toFixed(2)}</span>
+                                <span ref={dimXRef} className="bg-[#080808] px-3 font-mono text-xs text-[#CD7F32] tracking-widest uppercase">Dim_X: 0.00</span>
                             </div>
                             <div className="absolute top-[10%] left-[20%] w-[1px] h-[80%] bg-white/20 flex justify-center items-center">
-                                <span className="bg-[#080808] py-3 font-mono text-[10px] text-[#CD7F32] tracking-widest uppercase vertical-rl rotate-180">Dim_Y: {Math.abs(mousePos.y * 2).toFixed(2)}</span>
+                                <span ref={dimYRef} className="bg-[#080808] py-3 font-mono text-xs text-[#CD7F32] tracking-widest uppercase vertical-rl rotate-180">Dim_Y: 0.00</span>
                             </div>
                         </div>
 
                         {/* 3D Architectural Core */}
                         <div 
-                            className="absolute z-10 w-[300px] h-[450px] sm:w-[350px] sm:h-[550px] md:w-[450px] md:h-[650px] border border-white/[0.04] bg-gradient-to-br from-white/[0.03] to-transparent backdrop-blur-3xl transition-transform duration-300 ease-out shadow-[0_0_120px_rgba(0,0,0,0.6)]"
-                            style={{ 
-                                transform: `rotateX(${-mousePos.y}deg) rotateY(${mousePos.x}deg) translateZ(0)`,
-                                transformStyle: 'preserve-3d'
-                            }}
+                            ref={cardRef}
+                            className="absolute z-10 w-[300px] h-[450px] sm:w-[350px] sm:h-[550px] md:w-[450px] md:h-[650px] border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-2xl transition-transform duration-75 ease-linear shadow-[0_0_100px_rgba(0,0,0,0.8)] will-change-transform"
+                            style={{ transformStyle: 'preserve-3d' }}
                         >
-                            <div className="absolute inset-0 border-l border-white/10 [transform:translateZ(80px)]"></div>
-                            <div className="absolute inset-0 border-t border-[#CD7F32]/30 [transform:translateZ(-80px)]"></div>
-                            <div className="absolute inset-6 border border-white/5 opacity-30"></div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-r from-[#CD7F32]/10 to-transparent blur-[100px]"></div>
+                            <div className="absolute inset-0 border-l border-white/10 [transform:translateZ(60px)]"></div>
+                            <div className="absolute inset-0 border-t border-[#CD7F32]/40 [transform:translateZ(-60px)]"></div>
+                            <div className="absolute inset-6 border border-white/10 opacity-40"></div>
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-r from-[#CD7F32]/15 to-transparent blur-[80px]"></div>
                         </div>
 
                         {/* Hero Typography */}
                         <FadeInSection className="z-40 text-center relative w-full">
-                            <p className="text-[9px] md:text-[10px] tracking-[0.5em] md:tracking-[0.7em] uppercase text-[#CD7F32] mb-8 md:mb-12 font-bold flex items-center justify-center gap-3">
-                                <Icon name="scan-line" className="w-4 h-4" /> Professional Portfolio
+                            <p className="text-xs tracking-[0.4em] uppercase text-[#CD7F32] mb-8 md:mb-10 font-bold flex items-center justify-center gap-3">
+                                <Icon name="scan-line" className="w-5 h-5" /> Professional Portfolio
                             </p>
                             
-                            <h1 className="text-[16vw] md:text-[10vw] lg:text-[8vw] font-serif font-light leading-[0.8] tracking-tight italic text-white/90">
-                                Yasmin <span className="text-outline font-sans font-extrabold not-italic text-white/10">Akter</span>
+                            <h1 className="text-[16vw] md:text-[10vw] lg:text-[8vw] font-serif font-light leading-[0.85] tracking-tight italic text-white/90">
+                                Yasmin <span className="text-outline font-sans font-extrabold not-italic text-white/20">Akter</span>
                             </h1>
-                            <h1 className="text-[16vw] md:text-[10vw] lg:text-[8vw] font-extrabold leading-[0.8] tracking-tighter mt-1 md:mt-[-1vw] text-white">
+                            <h1 className="text-[16vw] md:text-[10vw] lg:text-[8vw] font-extrabold leading-[0.85] tracking-tighter mt-2 md:mt-0 text-white">
                                 Liza.
                             </h1>
                             
                             <div className="mt-12 md:mt-16 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-12">
                                 <div className="flex items-center gap-4 group">
-                                    <Icon name="frame" className="w-4 h-4 text-[#CD7F32] group-hover:rotate-90 transition-transform" />
-                                    <p className="text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-gray-400 font-medium">Exterior Design</p>
+                                    <Icon name="frame" className="w-5 h-5 text-[#CD7F32] group-hover:rotate-90 transition-transform" />
+                                    <p className="text-xs tracking-[0.3em] uppercase text-gray-300 font-medium">Exterior Design</p>
                                 </div>
-                                <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-[#CD7F32]/40"></span>
+                                <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-[#CD7F32]/50"></span>
                                 <div className="flex items-center gap-4 group">
-                                    <Icon name="layers" className="w-4 h-4 text-[#CD7F32] group-hover:scale-125 transition-transform" />
-                                    <p className="text-[10px] md:text-[11px] tracking-[0.4em] uppercase text-gray-400 font-medium">Interior Planning</p>
+                                    <Icon name="layers" className="w-5 h-5 text-[#CD7F32] group-hover:scale-110 transition-transform" />
+                                    <p className="text-xs tracking-[0.3em] uppercase text-gray-300 font-medium">Interior Planning</p>
                                 </div>
                             </div>
                         </FadeInSection>
                     </section>
 
-                    {/* 2. Metrics Section (Responsive Borders Fixed) */}
+                    {/* 2. Metrics Section */}
                     <section className="py-20 md:py-24 px-6 md:px-20 relative z-40 bg-[#080808]">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 shadow-2xl border border-white/5 rounded-sm">
+                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 shadow-2xl border border-white/10 rounded-sm">
                             <MetricCard count="20" label="BUILT PROJECTS" sub="Commercial & Residential Execution" delay={0} iconName="building-2" />
-                            <MetricCard count="28" label="MONTHS RECORD" sub="At Archvista Design Studio" delay={200} iconName="ruler" />
-                            <MetricCard count="PREMIUM" label="DESIGN QUALITY" sub="Delivering 'Joss' Spatial Experiences" delay={400} iconName="scan-line" isLast={true} />
+                            <MetricCard count="28" label="MONTHS RECORD" sub="At Archvista Design Studio" delay={150} iconName="ruler" />
+                            <MetricCard count="PREMIUM" label="DESIGN QUALITY" sub="Delivering 'Joss' Spatial Experiences" delay={300} iconName="scan-line" isLast={true} />
                         </div>
                     </section>
 
                     {/* 3. Biography Section */}
-                    <section id="about" className="py-24 md:py-40 px-6 md:px-20 bg-[#060606] relative z-40">
+                    <section id="about" className="py-24 md:py-32 px-6 md:px-20 bg-[#0a0a0a] relative z-40">
                         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
                             
                             {/* Image Frame */}
@@ -255,52 +296,52 @@
                                     <div className="relative aspect-[4/5] rounded-sm overflow-hidden border border-white/10 bg-[#111]">
                                         <img 
                                             src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200" 
-                                            alt="Architecture" 
-                                            className="absolute inset-0 w-full h-full object-cover opacity-40 grayscale group-hover:scale-105 group-hover:opacity-70 transition-all duration-1000"
+                                            alt="Architectural structure representing spatial design" 
+                                            className="absolute inset-0 w-full h-full object-cover opacity-50 grayscale group-hover:scale-105 group-hover:opacity-80 transition-all duration-1000"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#060606] via-transparent to-transparent opacity-80"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent opacity-90"></div>
                                         
                                         <div className="absolute top-6 left-6 md:top-10 md:left-10 p-4 border-l-2 border-[#CD7F32]">
-                                            <span className="text-[9px] md:text-[10px] tracking-[0.5em] uppercase text-[#CD7F32] font-bold">Biography</span>
+                                            <span className="text-xs tracking-[0.4em] uppercase text-[#CD7F32] font-bold">Biography</span>
                                         </div>
                                         
                                         <div className="absolute bottom-8 left-8 right-8 md:bottom-12 md:left-12 md:right-12">
                                             <h4 className="text-4xl md:text-5xl font-serif italic text-white mb-3 leading-none tracking-tighter">Yasmin Akter</h4>
-                                            <p className="text-[9px] md:text-[10px] tracking-[0.4em] uppercase text-gray-400 font-bold mb-5">Principal Architect & Visionary</p>
-                                            <div className="h-[1px] w-full bg-white/10"></div>
-                                            <p className="mt-5 text-[10px] md:text-xs text-[#CD7F32] tracking-widest font-bold uppercase italic">"Proudly Mr. Raw's Wife"</p>
+                                            <p className="text-xs tracking-[0.2em] uppercase text-gray-300 font-bold mb-5">Principal Architect & Visionary</p>
+                                            <div className="h-[1px] w-full bg-white/20"></div>
+                                            <p className="mt-5 text-sm text-[#CD7F32] tracking-widest font-bold uppercase italic">"Proudly Mr. Raw's Wife"</p>
                                         </div>
                                     </div>
                                 </FadeInSection>
                             </div>
                             
                             {/* Manifesto Text */}
-                            <div className="lg:col-span-7 space-y-12 lg:space-y-16 order-1 lg:order-2">
+                            <div className="lg:col-span-7 space-y-10 lg:space-y-12 order-1 lg:order-2">
                                 <FadeInSection>
-                                    <h2 className="text-[10px] md:text-xs tracking-[0.4em] uppercase text-gray-500 font-bold mb-6 flex items-center gap-4">
-                                        <span className="w-8 md:w-12 h-[1px] bg-[#CD7F32]"></span> Manifesto 2026
+                                    <h2 className="text-sm tracking-[0.3em] uppercase text-gray-400 font-bold mb-6 flex items-center gap-4">
+                                        <span className="w-10 h-[1px] bg-[#CD7F32]"></span> Manifesto 2026
                                     </h2>
-                                    <h3 className="text-4xl sm:text-5xl md:text-7xl font-serif font-light leading-[1.1] text-white">
+                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-serif font-light leading-[1.1] text-white">
                                         Designing for the <span className="italic text-[#CD7F32]">future</span> of Bangladesh.
                                     </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-12 text-gray-400 font-light text-sm md:text-base leading-relaxed">
-                                        <p>Based in the heart of <b className="text-white">Mirpur, Dhaka</b>, I have spent the last <b className="text-white">2.4 years</b> bridging the gap between artistic vision and structural feasibility. At Archvista, my role involves overseeing a diverse portfolio of 20 built works.</p>
-                                        <p>My philosophy is rooted in <b className="text-white">Material Honesty</b> and <b className="text-white">Spatial Efficiency</b>. I believe a project is truly successful when it creates a 'Joss' emotional response, providing users with true inspiration.</p>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-10 text-gray-300 font-light text-base leading-relaxed">
+                                        <p>Based in the heart of <b className="text-white font-semibold">Mirpur, Dhaka</b>, I have spent the last <b className="text-white font-semibold">2.4 years</b> bridging the gap between artistic vision and structural feasibility. At Archvista, my role involves overseeing a diverse portfolio of 20 built works.</p>
+                                        <p>My philosophy is rooted in <b className="text-white font-semibold">Material Honesty</b> and <b className="text-white font-semibold">Spatial Efficiency</b>. I believe a project is truly successful when it creates a 'Joss' emotional response, providing users with true inspiration.</p>
                                     </div>
                                 </FadeInSection>
                             </div>
                         </div>
                     </section>
 
-                    {/* 4. Timeline Section (Geometrically Perfect Aligned) */}
-                    <section className="py-24 md:py-40 px-6 md:px-20 relative z-40 border-t border-white/5 bg-[#080808]">
+                    {/* 4. Timeline Section */}
+                    <section className="py-24 md:py-32 px-6 md:px-20 relative z-40 border-t border-white/10 bg-[#080808]">
                         <div className="max-w-7xl mx-auto">
-                            <FadeInSection className="flex flex-col md:flex-row md:items-end justify-between mb-20 md:mb-24 gap-8">
+                            <FadeInSection className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
                                 <div className="max-w-xl">
-                                    <h2 className="text-[10px] md:text-xs tracking-[0.4em] md:tracking-[0.6em] uppercase text-[#CD7F32] font-bold mb-4 md:mb-6">Blueprint of Growth</h2>
-                                    <h3 className="text-5xl sm:text-6xl md:text-8xl font-serif font-light text-white italic leading-none">Career Roadmap</h3>
+                                    <h2 className="text-xs tracking-[0.3em] uppercase text-[#CD7F32] font-bold mb-4 md:mb-6">Blueprint of Growth</h2>
+                                    <h3 className="text-5xl sm:text-6xl md:text-7xl font-serif font-light text-white italic leading-none">Career Roadmap</h3>
                                 </div>
-                                <p className="text-sm text-gray-500 max-w-xs font-light leading-relaxed tracking-wide">A comprehensive look into my academic journey and professional milestones.</p>
+                                <p className="text-base text-gray-400 max-w-xs font-light leading-relaxed tracking-wide">A comprehensive look into my academic journey and professional milestones.</p>
                             </FadeInSection>
 
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20">
@@ -313,7 +354,7 @@
                                 ]} />
                             </div>
 
-                            <div className="mt-24 md:mt-40 grid grid-cols-1 md:grid-cols-3 gap-1 shadow-2xl border border-white/5">
+                            <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-3 gap-1 shadow-2xl border border-white/10">
                                 <HighlightCard iconName="award" title="Best Team Leader" sub="Management Excellence Award" />
                                 <HighlightCard iconName="award" title="Best Intern Award" sub="Recognition of Performance" />
                                 <HighlightCard iconName="scan-line" title="Pub. Year 2023" sub="Architectural Journal Entry" isLast={true} />
@@ -322,40 +363,40 @@
                     </section>
 
                     {/* 5. Contact Section */}
-                    <section id="contact" className="py-32 md:py-40 px-6 md:px-20 bg-white text-[#0a0a0a] relative z-40 rounded-t-[3rem] md:rounded-t-[8rem]">
+                    <section id="contact" className="py-24 md:py-40 px-6 md:px-20 bg-white text-[#0a0a0a] relative z-40 rounded-t-[3rem] md:rounded-t-[6rem]">
                         <div className="max-w-7xl mx-auto text-center relative overflow-hidden">
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] select-none pointer-events-none hidden lg:block">
-                                <h2 className="text-[22vw] font-bold leading-none uppercase tracking-tighter text-black">YASMIN</h2>
+                                <h2 className="text-[20vw] font-bold leading-none uppercase tracking-tighter text-black">YASMIN</h2>
                             </div>
                             <FadeInSection>
-                                <h2 className="text-[14vw] md:text-[9vw] font-serif font-light leading-none italic mb-12 tracking-tighter">
+                                <h2 className="text-[12vw] md:text-[8vw] font-serif font-light leading-none italic mb-10 tracking-tighter">
                                     Build your <br/> <span className="font-sans font-extrabold not-italic text-black tracking-tighter shimmer">Vision.</span>
                                 </h2>
                                 
-                                <div className="w-full max-w-3xl mx-auto bg-black/5 p-8 md:p-20 rounded-2xl backdrop-blur-3xl border border-black/5 relative z-10">
-                                    <p className="text-[9px] md:text-[10px] tracking-[0.4em] md:tracking-[0.6em] uppercase font-bold text-gray-500 mb-8 md:mb-12">Connect via Official Channel</p>
+                                <div className="w-full max-w-3xl mx-auto bg-black/5 p-8 md:p-16 rounded-2xl backdrop-blur-xl border border-black/10 relative z-10">
+                                    <p className="text-xs tracking-[0.3em] uppercase font-bold text-gray-500 mb-8 md:mb-10">Connect via Official Channel</p>
                                     
-                                    <a href="mailto:lyasminakter16@gmail.com" className="text-xl sm:text-2xl md:text-4xl font-bold md:font-light text-black hover:text-[#CD7F32] transition-all duration-500 break-all sm:break-normal">
+                                    <a href="mailto:lyasminakter16@gmail.com" aria-label="Send an email to Yasmin" className="text-xl sm:text-2xl md:text-3xl font-bold text-black hover:text-[#CD7F32] transition-colors duration-300 break-all sm:break-normal">
                                         lyasminakter16@gmail.com
                                     </a>
                                     
-                                    <div className="flex flex-wrap justify-center gap-6 md:gap-10 mt-16 md:mt-20 text-[10px] md:text-[11px] uppercase tracking-[0.4em] font-extrabold">
-                                        <a href="#" className="flex items-center gap-3 hover:text-[#CD7F32] transition-all group"><Icon name="linkedin" className="w-5 h-5 group-hover:scale-125 transition-transform"/> LinkedIn</a>
-                                        <a href="#" className="flex items-center gap-3 hover:text-[#CD7F32] transition-all group"><Icon name="mouse-pointer-2" className="w-5 h-5 group-hover:-translate-y-1 transition-transform"/> Digital CV</a>
+                                    <div className="flex flex-wrap justify-center gap-6 md:gap-10 mt-12 md:mt-16 text-xs uppercase tracking-[0.2em] font-extrabold">
+                                        <a href="#" aria-label="Visit LinkedIn Profile" className="flex items-center gap-3 hover:text-[#CD7F32] transition-all group"><Icon name="linkedin" className="w-5 h-5 group-hover:scale-110 transition-transform"/> LinkedIn</a>
+                                        <a href="#" aria-label="Download Digital CV" className="flex items-center gap-3 hover:text-[#CD7F32] transition-all group"><Icon name="mouse-pointer-2" className="w-5 h-5 group-hover:-translate-y-1 transition-transform"/> Digital CV</a>
                                     </div>
                                 </div>
                                 
-                                <div className="mt-20 flex items-center justify-center gap-6">
+                                <div className="mt-16 flex items-center justify-center gap-4">
                                     <Icon name="map-pin" className="text-[#CD7F32] w-5 h-5 md:w-6 md:h-6" />
-                                    <p className="text-xs md:text-sm font-bold uppercase tracking-[0.2em] md:tracking-[0.4em]">Mirpur // Dhaka // Bangladesh</p>
+                                    <p className="text-sm font-bold uppercase tracking-[0.2em]">Mirpur // Dhaka // Bangladesh</p>
                                 </div>
                             </FadeInSection>
                         </div>
                     </section>
 
-                    <footer className="py-10 md:py-16 px-6 md:px-10 bg-white text-black/50 text-[9px] md:text-[10px] uppercase tracking-[0.3em] md:tracking-[0.5em] font-bold flex flex-col md:flex-row justify-between items-center gap-4 md:gap-6 border-t border-black/5 relative z-40 text-center md:text-left">
+                    <footer className="py-10 px-6 md:px-10 bg-[#f8f8f8] text-black/60 text-xs uppercase tracking-[0.2em] font-bold flex flex-col md:flex-row justify-between items-center gap-6 border-t border-black/10 relative z-40 text-center md:text-left">
                         <p>© 2026 YASMIN AKTER LIZA Studio</p>
-                        <p className="opacity-40 hidden md:block">Architectural Manifesto // Ver 5.0</p>
+                        <p className="hidden md:block">Architectural Manifesto // Ver 5.1</p>
                         <p>Built works: 20 Successive Projects</p>
                     </footer>
                 </div>
@@ -365,40 +406,37 @@
         // --- Custom Components ---
 
         const MetricCard = ({ count, label, sub, iconName, delay, isLast }) => {
-            // Fixed mobile responsive borders
             const borderClasses = isLast ? "" : "border-b md:border-b-0 md:border-r border-white/10";
             return (
-                <FadeInSection delay={delay} className={`p-10 md:p-14 bg-white/[0.02] ${borderClasses} hover:bg-white/[0.05] transition-all duration-700 group backdrop-blur-xl`}>
-                    <div className="text-[#CD7F32] mb-8 md:mb-10 group-hover:rotate-12 group-hover:scale-125 transition-transform duration-500">
+                <FadeInSection delay={delay} className={`p-8 md:p-12 bg-white/[0.02] ${borderClasses} hover:bg-white/[0.05] transition-colors duration-500 group backdrop-blur-md`}>
+                    <div className="text-[#CD7F32] mb-6 md:mb-8 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300">
                         <Icon name={iconName} className="w-6 h-6 md:w-8 md:h-8" />
                     </div>
-                    <h3 className="text-6xl md:text-7xl font-extrabold mb-3 tracking-tighter text-white group-hover:text-[#CD7F32] transition-colors">{count}</h3>
-                    <p className="text-[10px] font-extrabold tracking-[0.3em] md:tracking-[0.4em] text-white uppercase mb-2">{label}</p>
-                    <p className="text-[10px] tracking-widest text-gray-500 group-hover:text-gray-300 transition-colors leading-relaxed">{sub}</p>
+                    <h3 className="text-5xl md:text-6xl font-extrabold mb-3 tracking-tighter text-white group-hover:text-[#CD7F32] transition-colors">{count}</h3>
+                    <p className="text-xs font-bold tracking-[0.2em] text-white uppercase mb-2">{label}</p>
+                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors leading-relaxed">{sub}</p>
                 </FadeInSection>
             );
         };
 
         const TimelineGroup = ({ title, iconName, items }) => {
             return (
-                <div className="flex flex-col gap-10 md:gap-12">
-                    <div className="flex items-center gap-4 md:gap-5 text-[#CD7F32]">
-                        <div className="p-3 bg-white/5 rounded-sm border border-white/10"><Icon name={iconName} className="w-4 h-4 md:w-5 md:h-5" /></div>
-                        <h4 className="text-[10px] md:text-[11px] tracking-[0.4em] md:tracking-[0.5em] uppercase font-extrabold text-white">{title}</h4>
+                <div className="flex flex-col gap-8 md:gap-10">
+                    <div className="flex items-center gap-4 text-[#CD7F32]">
+                        <div className="p-3 bg-white/5 rounded-sm border border-white/10"><Icon name={iconName} className="w-5 h-5" /></div>
+                        <h4 className="text-sm tracking-[0.3em] uppercase font-extrabold text-white">{title}</h4>
                     </div>
-                    {/* Geometrically Perfect Timeline Nodes */}
-                    <div className="border-l border-white/20 pl-8 md:pl-10 space-y-16 ml-3 md:ml-5">
+                    <div className="border-l border-white/20 pl-8 md:pl-10 space-y-12 ml-4">
                         {items.map((item, i) => (
                             <div key={i} className="relative group">
-                                {/* Fixed left positioning for perfect alignment on both mobile & desktop */}
-                                <div className="absolute -left-[38px] md:-left-12 top-1.5 w-3 h-3 md:w-4 md:h-4 rounded-none border border-[#CD7F32] bg-[#080808] rotate-45 group-hover:bg-[#CD7F32] transition-all duration-500 shadow-[0_0_15px_rgba(205,127,50,0.3)]"></div>
+                                <div className="absolute -left-[38px] md:-left-[46px] top-1.5 w-3 h-3 md:w-4 md:h-4 rounded-none border border-[#CD7F32] bg-[#080808] rotate-45 group-hover:bg-[#CD7F32] transition-colors duration-300"></div>
                                 
-                                <h5 className="text-2xl md:text-3xl font-extrabold tracking-tighter uppercase group-hover:text-[#CD7F32] transition-colors duration-500 leading-none">{item.title}</h5>
-                                <div className="flex flex-wrap items-center gap-3 md:gap-4 my-4">
-                                    <span className="text-[9px] md:text-[10px] font-bold text-[#CD7F32] tracking-[0.2em] md:tracking-[0.3em] uppercase underline underline-offset-4">{item.subtitle}</span>
-                                    <span className="text-[9px] md:text-[10px] text-gray-500 font-mono tracking-tighter">[{item.date}]</span>
+                                <h5 className="text-xl md:text-2xl font-extrabold tracking-tighter uppercase group-hover:text-[#CD7F32] transition-colors duration-300 leading-tight">{item.title}</h5>
+                                <div className="flex flex-wrap items-center gap-3 my-3">
+                                    <span className="text-xs font-bold text-[#CD7F32] tracking-[0.1em] uppercase">{item.subtitle}</span>
+                                    <span className="text-xs text-gray-500 font-mono tracking-tighter">[{item.date}]</span>
                                 </div>
-                                <p className="text-sm text-gray-400 font-light leading-relaxed max-w-md group-hover:text-gray-200 transition-colors">{item.desc}</p>
+                                <p className="text-sm text-gray-400 font-light leading-relaxed max-w-md group-hover:text-gray-300 transition-colors">{item.desc}</p>
                             </div>
                         ))}
                     </div>
@@ -409,14 +447,14 @@
         const HighlightCard = ({ iconName, title, sub, isLast }) => {
             const borderClasses = isLast ? "" : "border-b md:border-b-0 md:border-r border-white/10";
             return (
-                <div className={`p-10 md:p-14 bg-white/[0.01] ${borderClasses} hover:bg-white/[0.04] transition-all duration-700 group relative overflow-hidden`}>
+                <div className={`p-8 md:p-12 bg-white/[0.01] ${borderClasses} hover:bg-white/[0.04] transition-colors duration-500 group relative overflow-hidden`}>
                     <div className="absolute top-0 right-0 w-8 h-[1px] bg-white/20"></div>
                     <div className="absolute top-0 right-0 h-8 w-[1px] bg-white/20"></div>
-                    <div className="text-[#CD7F32] mb-8 md:mb-10 group-hover:scale-125 group-hover:translate-x-2 transition-all duration-500">
+                    <div className="text-[#CD7F32] mb-6 md:mb-8 group-hover:scale-110 group-hover:translate-x-2 transition-transform duration-300">
                         <Icon name={iconName} className="w-6 h-6 md:w-8 md:h-8" />
                     </div>
                     <h5 className="text-lg md:text-xl font-extrabold tracking-tighter uppercase group-hover:text-white transition-colors">{title}</h5>
-                    <p className="text-[9px] tracking-[0.3em] md:tracking-[0.4em] text-gray-500 mt-3 font-bold group-hover:text-[#CD7F32] transition-colors uppercase">{sub}</p>
+                    <p className="text-xs tracking-[0.2em] text-gray-400 mt-2 font-bold group-hover:text-[#CD7F32] transition-colors uppercase">{sub}</p>
                 </div>
             );
         };
