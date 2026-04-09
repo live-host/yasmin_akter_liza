@@ -1,0 +1,328 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { 
+  ArrowUpRight, MapPin, Mail, Linkedin, Building2, 
+  Award, BookOpen, ChevronRight, Layers, Ruler, MousePointer2 
+} from 'lucide-react';
+
+// --- Scroll Animation Hook ---
+const useIntersectionObserver = (options = {}) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const domRef = useRef();
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setIsVisible(true);
+      }
+    }, { threshold: 0.1, ...options });
+
+    const currentRef = domRef.current;
+    if (currentRef) observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, [options]);
+
+  return [domRef, isVisible];
+};
+
+// --- FadeIn Component ---
+const FadeInSection = ({ children, delay = 0, className = '', direction = 'up' }) => {
+  const [ref, isVisible] = useIntersectionObserver();
+  
+  const getTranslate = () => {
+    switch(direction) {
+      case 'left': return 'translate-x-16';
+      case 'right': return '-translate-x-16';
+      default: return 'translate-y-16';
+    }
+  };
+
+  return (
+    <div
+      ref={ref}
+      className={`transition-all duration-1000 ease-out ${
+        isVisible ? 'opacity-100 translate-x-0 translate-y-0' : `opacity-0 ${getTranslate()}`
+      } ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+};
+
+export default function App() {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+
+  // Handle Mouse Move for 3D and Custom Cursor
+  useEffect(() => {
+    const handleMove = (e) => {
+      setMousePos({
+        x: (e.clientX / window.innerWidth - 0.5) * 30,
+        y: (e.clientY / window.innerHeight - 0.5) * 30,
+      });
+      setCursorPos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMove);
+    return () => window.removeEventListener('mousemove', handleMove);
+  }, []);
+
+  return (
+    <div className="bg-[#0c0c0c] min-h-screen text-[#f5f5f5] font-sans selection:bg-[#CD7F32] selection:text-white overflow-x-hidden relative cursor-none">
+      {/* Structural Styles */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap');
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Space Grotesk', sans-serif; background-color: #0c0c0c; }
+        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        .grain {
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+          opacity: 0.04; pointer-events: none; z-index: 99;
+        }
+        .text-outline { -webkit-text-stroke: 1px rgba(255,255,255,0.1); color: transparent; }
+        .vertical-rl { writing-mode: vertical-rl; }
+        .custom-cursor {
+          position: fixed; top: 0; left: 0; width: 40px; height: 40px;
+          border: 1px solid rgba(205, 127, 50, 0.5); border-radius: 50%;
+          transform: translate(-50%, -50%); pointer-events: none; z-index: 100;
+          transition: width 0.3s, height 0.3s;
+        }
+        .crosshair-h { position: fixed; left: 0; height: 1px; width: 100vw; background: rgba(255,255,255,0.05); pointer-events: none; z-index: 98; }
+        .crosshair-v { position: fixed; top: 0; width: 1px; height: 100vh; background: rgba(255,255,255,0.05); pointer-events: none; z-index: 98; }
+      `}} />
+
+      <div className="grain"></div>
+      
+      {/* Architectural Crosshair Cursor UI */}
+      <div className="custom-cursor hidden md:block" style={{ left: cursorPos.x, top: cursorPos.y }}></div>
+      <div className="crosshair-h hidden md:block" style={{ top: cursorPos.y }}></div>
+      <div className="crosshair-v hidden md:block" style={{ left: cursorPos.x }}></div>
+
+      {/* Floating Side Info */}
+      <div className="fixed left-6 bottom-12 z-50 vertical-rl hidden lg:block">
+        <p className="text-[9px] tracking-[0.6em] uppercase text-gray-600 font-bold rotate-180">
+          PROJECT COUNT: 20 // BUILT WORKS: 20
+        </p>
+      </div>
+
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full p-8 flex justify-between items-center z-[60]">
+        <div className="text-xl font-bold tracking-tighter flex items-center gap-3">
+          <div className="w-10 h-[1px] bg-[#CD7F32]"></div>
+          YASMIN AKTER LIZA
+        </div>
+        <div className="flex gap-8 items-center text-[10px] uppercase tracking-[0.4em] font-bold">
+          <a href="#about" className="hover:text-[#CD7F32] transition-colors">Manifesto</a>
+          <a href="#contact" className="hover:text-[#CD7F32] transition-all bg-white/5 border border-white/10 px-6 py-2 rounded-full backdrop-blur-md">Connect</a>
+        </div>
+      </nav>
+
+      {/* 1. Hero: The Architectural Monolith */}
+      <section className="relative h-screen w-full flex flex-col items-center justify-center pt-20 px-6 overflow-hidden">
+        
+        {/* Monolith Annotation Elements */}
+        <div className="absolute z-10 w-[450px] h-[650px] pointer-events-none opacity-40">
+           <div className="absolute top-0 left-0 text-[10px] font-mono text-[#CD7F32]">X: {mousePos.x.toFixed(2)}</div>
+           <div className="absolute top-4 left-0 text-[10px] font-mono text-[#CD7F32]">Y: {mousePos.y.toFixed(2)}</div>
+           <div className="absolute bottom-0 right-0 text-[10px] font-mono text-gray-500">SCALE: 1:100</div>
+           <div className="absolute top-1/2 -left-12 w-24 h-[1px] bg-white/10 -rotate-90"></div>
+           <div className="absolute top-1/2 -right-12 w-24 h-[1px] bg-white/10 -rotate-90"></div>
+        </div>
+
+        {/* 3D Monolith Structure */}
+        <div 
+          className="absolute z-0 w-[400px] h-[600px] border border-white/5 bg-gradient-to-br from-white/[0.05] to-transparent backdrop-blur-3xl transition-transform duration-200 ease-out shadow-2xl"
+          style={{ 
+            transform: `rotateX(${-mousePos.y}deg) rotateY(${mousePos.x}deg) translateZ(0)`,
+            transformStyle: 'preserve-3d'
+          }}
+        >
+          <div className="absolute inset-0 border-l border-white/20 [transform:translateZ(60px)]"></div>
+          <div className="absolute inset-0 border-t border-[#CD7F32]/40 [transform:translateZ(-60px)]"></div>
+          {/* Inner Light Core */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-[#CD7F32]/10 blur-[80px]"></div>
+        </div>
+
+        <FadeInSection className="z-20 text-center">
+          <p className="text-[10px] tracking-[0.6em] uppercase text-[#CD7F32] mb-10 font-bold">Junior Architect @ Archvista Studio</p>
+          <h1 className="text-[12vw] md:text-[8vw] font-serif font-light leading-none tracking-tighter italic">
+            Yasmin <span className="text-outline font-sans font-bold not-italic">Akter</span>
+          </h1>
+          <h1 className="text-[12vw] md:text-[8vw] font-bold leading-none tracking-tighter mt-[-1vw]">
+            Liza.
+          </h1>
+          <div className="mt-12 flex justify-center items-center gap-6">
+             <span className="w-12 h-[1px] bg-white/20"></span>
+             <p className="text-xs tracking-[0.3em] uppercase text-gray-400 font-light">Architectural Exterior & Interior</p>
+             <span className="w-12 h-[1px] bg-white/20"></span>
+          </div>
+        </FadeInSection>
+
+        <div className="absolute bottom-12 flex flex-col items-center gap-4 z-20 animate-pulse">
+           <p className="text-[8px] tracking-[0.5em] uppercase text-gray-500">Foundation // 2026</p>
+        </div>
+      </section>
+
+      {/* 2. Metrics: Visual Proof */}
+      <section className="py-32 px-6 md:px-20 relative z-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-0 border border-white/10">
+          <MetricCard count="20" label="PROJECTS COUNT" sub="Comprehensive design lifecycle" delay={0} />
+          <MetricCard count="20" label="BUILT WORKS" sub="Executed projects in Bangladesh" delay={200} />
+          <MetricCard count="JOSS" label="OUTCOME" sub="Visual & Functional Performance" delay={400} />
+        </div>
+      </section>
+
+      {/* 3. Manifesto & Bio */}
+      <section id="about" className="py-32 px-6 md:px-20 bg-[#0a0a0a] relative z-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+          <FadeInSection direction="left" className="relative">
+            <div className="aspect-[3/4] bg-[#1a1a1a] rounded-sm overflow-hidden border border-white/5 relative">
+              <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1000')] bg-cover opacity-30 grayscale mix-blend-luminosity"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent"></div>
+              <div className="absolute bottom-12 left-12">
+                 <h4 className="text-5xl font-serif italic text-white mb-4">Yasmin Akter</h4>
+                 <div className="flex items-center gap-4">
+                    <span className="w-8 h-[1px] bg-[#CD7F32]"></span>
+                    <p className="text-xs tracking-[0.4em] uppercase text-[#CD7F32] font-bold">Mr Raw's Wife</p>
+                 </div>
+              </div>
+            </div>
+          </FadeInSection>
+
+          <div className="flex flex-col gap-12">
+            <FadeInSection>
+              <h2 className="text-[10px] tracking-[0.5em] uppercase text-gray-500 font-bold mb-6">Manifesto // 01</h2>
+              <h3 className="text-5xl md:text-6xl font-serif font-light leading-tight">
+                Crafting <span className="italic text-[#CD7F32]">tangible narratives</span> within urban landscapes.
+              </h3>
+              <div className="space-y-8 mt-10 text-gray-400 font-light text-lg leading-relaxed">
+                <p>
+                  As an architect based in <strong>Mirpur, Dhaka</strong>, I view every project as an opportunity to redefine the boundary between structural rigidity and fluid interior comfort. With over <strong>2 years and 4 months</strong> of professional experience at Archvista, I have dedicated myself to delivering excellence in every blueprint.
+                </p>
+                <p>
+                  My work spans across 20 built projects, focusing on delivering a truly <strong>'Joss' outcome</strong> — where aesthetics meet absolute functionality.
+                </p>
+                <div className="pt-10 border-t border-white/10 mt-6">
+                   <p className="text-[10px] tracking-[0.3em] uppercase text-[#CD7F32] font-bold mb-4">Current Location</p>
+                   <p className="text-sm font-bold flex items-center gap-2">
+                     <MapPin className="w-4 h-4 text-[#CD7F32]" /> MIRPUR, DHAKA, BANGLADESH
+                   </p>
+                </div>
+              </div>
+            </FadeInSection>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Timeline: Education & Career */}
+      <section className="py-32 px-6 md:px-20 relative z-20 border-t border-white/5">
+        <div className="max-w-7xl mx-auto">
+          <FadeInSection className="mb-20">
+             <h2 className="text-7xl font-serif italic font-light opacity-20 text-outline uppercase tracking-tighter">Blueprint of Growth</h2>
+          </FadeInSection>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+            <div className="space-y-20">
+               <TimelineGroup title="Professional Record" icon={<Building2 />} items={[
+                 { title: "Junior Architect", subtitle: "Archvista Studio", date: "2Y 4M Experience", desc: "Leading architectural exterior and interior projects with a focus on sustainable materials." }
+               ]} />
+            </div>
+            <div className="space-y-20">
+               <TimelineGroup title="Academic Record" icon={<BookOpen />} items={[
+                 { title: "Bachelor of Architecture", subtitle: "Currently Running", date: "Present", desc: "Exploring advanced parametric design and urban planning theories." },
+                 { title: "Diploma in Architecture", subtitle: "Successfully Complete", date: "Graduate", desc: "Core focus on structural engineering and site management." }
+               ]} />
+            </div>
+          </div>
+
+          <div className="mt-32 grid grid-cols-1 md:grid-cols-3 gap-8">
+             <HighlightCard icon={<Award />} title="Best Team Leader" sub="Archvista Award" />
+             <HighlightCard icon={<Award />} title="Best Intern Award" sub="Excellence Recognition" />
+             <HighlightCard icon={<Layers />} title="Pub. Year 2023" sub="Architectural Journal" />
+          </div>
+        </div>
+      </section>
+
+      {/* 5. Contact: Final Signature */}
+      <section id="contact" className="py-32 px-6 md:px-20 bg-white text-[#0a0a0a] relative z-20 rounded-t-[4rem]">
+        <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
+          <FadeInSection>
+            <h2 className="text-[14vw] md:text-[8vw] font-serif font-light leading-none italic mb-16">
+              Architecture of <br/> <span className="font-sans font-bold not-italic tracking-tighter">Connection.</span>
+            </h2>
+            
+            <div className="w-full max-w-2xl bg-black/5 p-12 rounded-3xl backdrop-blur-sm border border-black/5">
+              <p className="text-[10px] tracking-[0.5em] uppercase font-bold text-gray-500 mb-8 underline decoration-[#CD7F32] underline-offset-8">Direct Channel</p>
+              <a href="mailto:lyasminakter16@gmail.com" className="text-xl md:text-3xl font-light hover:text-[#CD7F32] transition-colors break-words">
+                lyasminakter16@gmail.com
+              </a>
+              <div className="flex flex-wrap justify-center gap-10 mt-12 text-[10px] uppercase tracking-[0.3em] font-bold">
+                <a href="#" className="flex items-center gap-2 hover:text-[#CD7F32] transition-all"><Linkedin className="w-4 h-4"/> LinkedIn</a>
+                <a href="#" className="flex items-center gap-2 hover:text-[#CD7F32] transition-all"><MousePointer2 className="w-4 h-4"/> Portfolio</a>
+              </div>
+            </div>
+
+            <div className="mt-20">
+               <p className="text-xs tracking-[0.4em] uppercase font-bold text-gray-400">Archvista Studio // BD Division</p>
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
+
+      {/* Simple Footer */}
+      <footer className="py-10 px-10 bg-white text-black/40 text-[9px] uppercase tracking-[0.4em] font-bold flex justify-between border-t border-black/5 relative z-20">
+        <p>© 2026 YASMIN AKTER LIZA</p>
+        <p>BUILDING VISIONS // 20 BUILT WORKS</p>
+      </footer>
+    </div>
+  );
+}
+
+// --- Specialized Components ---
+
+function MetricCard({ count, label, sub, delay }) {
+  return (
+    <FadeInSection delay={delay} className="p-12 border-r border-white/10 last:border-r-0 hover:bg-white/[0.02] transition-all group">
+      <h3 className="text-7xl font-bold mb-4 tracking-tighter group-hover:text-[#CD7F32] transition-colors">{count}</h3>
+      <p className="text-[10px] font-bold tracking-[0.3em] text-white uppercase mb-2">{label}</p>
+      <p className="text-[10px] tracking-widest text-gray-600 group-hover:text-gray-400 transition-colors">{sub}</p>
+    </FadeInSection>
+  );
+}
+
+function TimelineGroup({ title, icon, items }) {
+  return (
+    <div className="flex flex-col gap-10">
+      <div className="flex items-center gap-4 text-[#CD7F32]">
+        {icon}
+        <h4 className="text-xs tracking-[0.4em] uppercase font-bold text-white">{title}</h4>
+      </div>
+      <div className="border-l border-white/10 pl-8 space-y-16">
+        {items.map((item, i) => (
+          <div key={i} className="relative group">
+            <div className="absolute -left-[37px] top-1.5 w-4 h-4 rounded-full border border-[#CD7F32] bg-[#0c0c0c] group-hover:bg-[#CD7F32] transition-colors"></div>
+            <h5 className="text-2xl font-bold tracking-tight uppercase group-hover:text-[#CD7F32] transition-colors">{item.title}</h5>
+            <div className="flex items-center gap-3 my-2">
+               <span className="text-xs font-bold text-[#CD7F32] tracking-widest uppercase">{item.subtitle}</span>
+               <span className="text-[10px] text-gray-500 font-mono tracking-tighter">[{item.date}]</span>
+            </div>
+            <p className="text-sm text-gray-500 font-light leading-relaxed max-w-md">{item.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HighlightCard({ icon, title, sub }) {
+  return (
+    <div className="p-10 border border-white/5 bg-white/[0.01] rounded-sm hover:border-[#CD7F32]/40 transition-all group">
+       <div className="text-[#CD7F32] mb-6 group-hover:scale-110 transition-transform">{icon}</div>
+       <h5 className="text-lg font-bold tracking-tight uppercase group-hover:text-white transition-colors">{title}</h5>
+       <p className="text-[10px] tracking-[0.3em] text-gray-600 mt-2 font-bold">{sub}</p>
+    </div>
+  );
+}
