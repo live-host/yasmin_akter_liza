@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Yasmin Akter Liza - Professional Architecture Portfolio showcasing exterior design, interior planning, and built projects in Bangladesh.">
-    <title>Yasmin Akter Liza | Architecture Portfolio</title>
+    <meta name="description" content="Yasmin Akter Liza - Premium Architecture Portfolio.">
+    <title>Yasmin Akter Liza | Architectural Vision</title>
     
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -12,79 +12,101 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        accent: '#CD7F32', // Bronze/Gold
+                        darkBg: '#050505',
+                        lightBg: '#F8F9FA',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400;1,600&display=swap');
         
         html { scroll-behavior: smooth; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #080808; margin: 0; overflow-x: hidden; }
-        .font-serif { font-family: 'Cormorant Garamond', serif; }
+        body { 
+            margin: 0; overflow-x: hidden; 
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
         
-        /* Optimized Subtle Grain Texture - Disabled on small screens for performance */
+        /* Smooth Global Transitions */
+        *, *::before, *::after {
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Architectural Grid Background */
+        .bg-grid {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(128, 128, 128, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black, transparent 80%);
+            -webkit-mask-image: radial-gradient(circle at center, black, transparent 80%);
+        }
+
+        /* Subtle Grain Texture */
         .grain {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            opacity: 0.04; pointer-events: none; z-index: 100;
+            opacity: 0.03; pointer-events: none; z-index: 100;
+            mix-blend-mode: overlay;
         }
         
-        /* Custom Architectural Cursors - Hardware Accelerated */
-        .custom-cursor {
-            position: fixed; top: 0; left: 0; width: 36px; height: 36px;
-            border: 1px solid rgba(205, 127, 50, 0.4); border-radius: 50%;
-            pointer-events: none; z-index: 200;
-            will-change: transform;
-        }
-        .cursor-inner {
-            position: fixed; top: 0; left: 0; width: 4px; height: 4px;
-            background: #CD7F32; border-radius: 50%;
-            pointer-events: none; z-index: 201;
-            will-change: transform;
-        }
-        .blueprint-line-h { position: fixed; top: 0; left: 0; height: 1px; width: 100vw; background: rgba(255,255,255,0.03); pointer-events: none; z-index: 90; will-change: transform; }
-        .blueprint-line-v { position: fixed; top: 0; left: 0; width: 1px; height: 100vh; background: rgba(255,255,255,0.03); pointer-events: none; z-index: 90; will-change: transform; }
-        
-        .text-outline { -webkit-text-stroke: 1px rgba(255,255,255,0.15); color: transparent; }
+        /* Premium Text Outline */
+        .text-outline-dark { -webkit-text-stroke: 1px rgba(255,255,255,0.15); color: transparent; }
+        .text-outline-light { -webkit-text-stroke: 1px rgba(0,0,0,0.15); color: transparent; }
         .vertical-rl { writing-mode: vertical-rl; }
         
-        /* Golden Shimmer Effect */
+        /* Shimmer Effect */
         @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
         }
         .shimmer {
-            background: linear-gradient(90deg, #222, #CD7F32, #222);
+            background: linear-gradient(90deg, currentColor, #CD7F32, currentColor);
             background-size: 200% 100%;
             animation: shimmer 4s infinite linear;
             -webkit-background-clip: text;
             color: transparent;
         }
-        
-        /* Hide Default Cursor on Desktop and disable heavy effects on mobile */
-        @media (min-width: 1024px) {
-            body { cursor: none !important; }
-            a, button { cursor: none !important; }
-        }
-        @media (max-width: 768px) {
-            .grain { display: none; } /* Saves battery and CPU on mobile */
-        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #CD7F32; border-radius: 10px; }
+
+        /* Hide elements during preloader */
+        .content-hidden { opacity: 0; visibility: hidden; }
+        .content-visible { opacity: 1; visibility: visible; transition: opacity 1.5s ease; }
     </style>
 </head>
-<body>
+<body class="bg-lightBg text-neutral-900 dark:bg-darkBg dark:text-neutral-100 antialiased font-sans">
     <div id="root"></div>
 
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- Optimized Lucide Icon Adapter ---
+        // --- Lucide Icon Component ---
         const Icon = ({ name, className = "" }) => {
             const spanRef = useRef(null);
-            
             useEffect(() => {
                 if (spanRef.current && window.lucide) {
                     spanRef.current.innerHTML = `<i data-lucide="${name}" class="${className}"></i>`;
                     window.lucide.createIcons({ root: spanRef.current });
                 }
             }, [name, className]);
-            
             return <span ref={spanRef} className="inline-flex items-center justify-center"></span>;
         };
 
@@ -97,30 +119,24 @@
                 const observer = new IntersectionObserver(([entry]) => {
                     if (entry.isIntersecting) {
                         setIsVisible(true);
-                        observer.unobserve(entry.target); // Stop observing once visible for performance
+                        observer.unobserve(entry.target);
                     }
                 }, { threshold: 0.1, ...options });
 
-                const currentRef = domRef.current;
-                if (currentRef) observer.observe(currentRef);
-
-                return () => {
-                    if (currentRef) observer.unobserve(currentRef);
-                };
+                if (domRef.current) observer.observe(domRef.current);
+                return () => domRef.current && observer.unobserve(domRef.current);
             }, [options]);
 
             return [domRef, isVisible];
         };
 
-        // --- FadeIn Component ---
         const FadeInSection = ({ children, delay = 0, className = '', direction = 'up' }) => {
             const [ref, isVisible] = useIntersectionObserver();
-            
             const getTranslate = () => {
                 switch(direction) {
-                    case 'left': return 'translate-x-8 md:translate-x-12';
-                    case 'right': return '-translate-x-8 md:-translate-x-12';
-                    default: return 'translate-y-10 md:translate-y-12';
+                    case 'left': return 'translate-x-10';
+                    case 'right': return '-translate-x-10';
+                    default: return 'translate-y-10';
                 }
             };
 
@@ -138,48 +154,64 @@
         };
 
         function App() {
-            // Refs for direct DOM manipulation (Fixes React re-render performance issue)
-            const cursorRef = useRef(null);
-            const cursorInnerRef = useRef(null);
-            const lineHRef = useRef(null);
-            const lineVRef = useRef(null);
+            // States
+            const [isDark, setIsDark] = useState(true);
+            const [scrollProgress, setScrollProgress] = useState(0);
+            const [isLoaded, setIsLoaded] = useState(false);
+            
+            // Refs for 3D Card Parallax
             const cardRef = useRef(null);
             const dimXRef = useRef(null);
             const dimYRef = useRef(null);
 
-            // Handle Mouse Move without triggering React State Re-renders
+            // Preloader Logic
             useEffect(() => {
-                // Only run custom cursor logic on non-touch devices
+                const timer = setTimeout(() => setIsLoaded(true), 2000);
+                return () => clearTimeout(timer);
+            }, []);
+
+            // Theme Toggle Logic
+            useEffect(() => {
+                const root = window.document.documentElement;
+                if (isDark) {
+                    root.classList.add('dark');
+                } else {
+                    root.classList.remove('dark');
+                }
+            }, [isDark]);
+
+            // Scroll Progress
+            useEffect(() => {
+                const handleScroll = () => {
+                    const totalScroll = document.documentElement.scrollTop;
+                    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                    const scroll = `${totalScroll / windowHeight * 100}`;
+                    setScrollProgress(scroll);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            // 3D Mouse Parallax
+            useEffect(() => {
                 const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
                 if (isTouchDevice) return;
 
                 let animationFrameId;
-
                 const handleMove = (e) => {
-                    // Use requestAnimationFrame for smooth 60fps performance
                     animationFrameId = requestAnimationFrame(() => {
                         const x = e.clientX;
                         const y = e.clientY;
-                        
-                        // Update Cursors & Lines directly
-                        if (cursorRef.current) cursorRef.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
-                        if (cursorInnerRef.current) cursorInnerRef.current.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
-                        if (lineHRef.current) lineHRef.current.style.transform = `translateY(${y}px)`;
-                        if (lineVRef.current) lineVRef.current.style.transform = `translateX(${x}px)`;
-
-                        // 3D Card Math
                         const centerX = window.innerWidth / 2;
                         const centerY = window.innerHeight / 2;
-                        const rotateX = ((y - centerY) / centerY) * -15; // Limit rotation to 15 degrees
-                        const rotateY = ((x - centerX) / centerX) * 15;
+                        const rotateX = ((y - centerY) / centerY) * -12;
+                        const rotateY = ((x - centerX) / centerX) * 12;
 
                         if (cardRef.current) {
                             cardRef.current.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(0)`;
                         }
-
-                        // Update Dimension Labels
-                        if (dimXRef.current) dimXRef.current.innerText = `Dim_X: ${Math.abs(rotateY * 2).toFixed(2)}`;
-                        if (dimYRef.current) dimYRef.current.innerText = `Dim_Y: ${Math.abs(rotateX * 2).toFixed(2)}`;
+                        if (dimXRef.current) dimXRef.current.innerText = `X: ${Math.abs(rotateY * 2).toFixed(2)}`;
+                        if (dimYRef.current) dimYRef.current.innerText = `Y: ${Math.abs(rotateX * 2).toFixed(2)}`;
                     });
                 };
 
@@ -191,270 +223,253 @@
             }, []);
 
             return (
-                <div className="min-h-screen text-[#f0f0f0] relative selection:bg-[#CD7F32] selection:text-white">
-                    <div className="grain"></div>
-                    
-                    {/* Custom Cursor UI (Desktop Only) */}
-                    <div className="hidden lg:block">
-                        <div ref={cursorRef} className="custom-cursor"></div>
-                        <div ref={cursorInnerRef} className="cursor-inner"></div>
-                        <div ref={lineHRef} className="blueprint-line-h"></div>
-                        <div ref={lineVRef} className="blueprint-line-v"></div>
+                <>
+                    {/* Preloader */}
+                    <div className={`fixed inset-0 z-[999] bg-darkBg flex flex-col items-center justify-center transition-all duration-1000 ${isLoaded ? 'opacity-0 pointer-events-none -translate-y-10' : 'opacity-100 translate-y-0'}`}>
+                        <div className="w-16 h-16 border-t-2 border-r-2 border-accent rounded-full animate-spin mb-6"></div>
+                        <p className="text-accent text-xs tracking-[0.4em] uppercase font-semibold animate-pulse">Designing Spaces</p>
                     </div>
 
-                    {/* Vertical Side Info */}
-                    <div className="fixed left-8 bottom-12 z-[60] vertical-rl hidden xl:block opacity-60 hover:opacity-100 transition-opacity">
-                        <div className="flex items-center gap-6 rotate-180">
-                            <p className="text-xs tracking-[0.4em] uppercase text-gray-400 font-bold">Yasmin Akter Liza</p>
-                            <span className="w-12 h-[1px] bg-[#CD7F32]/50"></span>
-                            <p className="text-xs tracking-[0.4em] uppercase text-[#CD7F32] font-bold">Junior Architect</p>
-                        </div>
-                    </div>
+                    <div className={isLoaded ? 'content-visible relative' : 'content-hidden'}>
+                        {/* Global Background Elements */}
+                        <div className="bg-grid"></div>
+                        <div className="grain hidden md:block"></div>
 
-                    {/* Navigation */}
-                    <nav className="fixed top-0 w-full p-6 md:p-10 flex justify-between items-center z-[150] mix-blend-difference">
-                        <div className="text-lg md:text-xl font-bold tracking-tighter flex items-center gap-4 group">
-                            <div className="w-8 h-8 border border-[#CD7F32] flex items-center justify-center rotate-45 group-hover:bg-[#CD7F32] transition-all duration-500">
-                                <span className="text-xs -rotate-45 text-[#CD7F32] group-hover:text-black font-bold">YA</span>
-                            </div>
-                            <span className="text-xs md:text-sm tracking-[0.2em] uppercase hidden sm:block">Architecture Studio</span>
-                        </div>
-                        <div className="flex gap-6 md:gap-10 items-center text-xs uppercase tracking-[0.2em] font-bold text-white/80">
-                            <a href="#about" aria-label="Go to Manifesto section" className="hover:text-[#CD7F32] transition-colors relative after:content-[''] after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-[#CD7F32] hover:after:w-full after:transition-all">Manifesto</a>
-                            <a href="#contact" aria-label="Go to Contact section" className="hover:text-white transition-all bg-white/5 border border-white/10 px-6 py-2 md:px-8 md:py-3 rounded-sm backdrop-blur-md hover:bg-[#CD7F32] hover:text-black hover:border-[#CD7F32]">Contact</a>
-                        </div>
-                    </nav>
+                        {/* Top Scroll Progress Bar */}
+                        <div className="fixed top-0 left-0 h-1 bg-accent z-[200] transition-all duration-100 ease-out" style={{ width: `${scrollProgress}%` }}></div>
 
-                    {/* 1. Hero Section */}
-                    <section className="relative min-h-screen w-full flex flex-col items-center justify-center pt-24 px-6 overflow-hidden">
-                        
-                        {/* Dynamic Dimensions Labels (Desktop Only) */}
-                        <div className="absolute z-30 w-full max-w-4xl h-[600px] pointer-events-none opacity-40 hidden lg:block">
-                            <div className="absolute top-[20%] left-[10%] w-[80%] h-[1px] bg-white/20 flex justify-center items-center">
-                                <span ref={dimXRef} className="bg-[#080808] px-3 font-mono text-xs text-[#CD7F32] tracking-widest uppercase">Dim_X: 0.00</span>
-                            </div>
-                            <div className="absolute top-[10%] left-[20%] w-[1px] h-[80%] bg-white/20 flex justify-center items-center">
-                                <span ref={dimYRef} className="bg-[#080808] py-3 font-mono text-xs text-[#CD7F32] tracking-widest uppercase vertical-rl rotate-180">Dim_Y: 0.00</span>
-                            </div>
-                        </div>
-
-                        {/* 3D Architectural Core */}
-                        <div 
-                            ref={cardRef}
-                            className="absolute z-10 w-[300px] h-[450px] sm:w-[350px] sm:h-[550px] md:w-[450px] md:h-[650px] border border-white/[0.06] bg-gradient-to-br from-white/[0.04] to-transparent backdrop-blur-2xl transition-transform duration-75 ease-linear shadow-[0_0_100px_rgba(0,0,0,0.8)] will-change-transform"
-                            style={{ transformStyle: 'preserve-3d' }}
+                        {/* Theme Toggle Button */}
+                        <button 
+                            onClick={() => setIsDark(!isDark)}
+                            className="fixed right-6 md:right-10 bottom-10 z-[150] w-12 h-12 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white/50 dark:bg-black/50 backdrop-blur-lg flex items-center justify-center text-neutral-800 dark:text-neutral-200 hover:text-accent hover:border-accent transition-all shadow-lg hover:scale-110"
+                            aria-label="Toggle Theme"
                         >
-                            <div className="absolute inset-0 border-l border-white/10 [transform:translateZ(60px)]"></div>
-                            <div className="absolute inset-0 border-t border-[#CD7F32]/40 [transform:translateZ(-60px)]"></div>
-                            <div className="absolute inset-6 border border-white/10 opacity-40"></div>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-gradient-to-r from-[#CD7F32]/15 to-transparent blur-[80px]"></div>
+                            {isDark ? <Icon name="sun" className="w-5 h-5" /> : <Icon name="moon" className="w-5 h-5" />}
+                        </button>
+
+                        {/* Navigation */}
+                        <nav className="fixed top-0 w-full p-6 md:px-12 md:py-8 flex justify-between items-center z-[150] backdrop-blur-sm bg-lightBg/30 dark:bg-darkBg/30 border-b border-neutral-200/50 dark:border-neutral-800/50">
+                            <div className="text-lg font-bold tracking-tighter flex items-center gap-4 group cursor-pointer">
+                                <div className="w-8 h-8 border-2 border-accent flex items-center justify-center rotate-45 group-hover:bg-accent transition-all duration-500">
+                                    <span className="text-xs -rotate-45 text-accent group-hover:text-white font-bold transition-colors">YA</span>
+                                </div>
+                                <span className="text-xs tracking-[0.25em] uppercase hidden sm:block font-semibold">Arch Studio</span>
+                            </div>
+                            <div className="flex gap-8 items-center text-xs uppercase tracking-[0.2em] font-semibold">
+                                <a href="#manifesto" className="hover:text-accent transition-colors">Manifesto</a>
+                                <a href="#contact" className="bg-neutral-900 text-white dark:bg-white dark:text-black px-6 py-2.5 rounded-sm hover:bg-accent dark:hover:bg-accent hover:text-white dark:hover:text-white transition-all shadow-md">Let's Talk</a>
+                            </div>
+                        </nav>
+
+                        {/* Vertical Side Info (Desktop) */}
+                        <div className="fixed left-8 bottom-12 z-[60] vertical-rl hidden xl:block opacity-40 hover:opacity-100 transition-opacity">
+                            <div className="flex items-center gap-6 rotate-180">
+                                <p className="text-[10px] tracking-[0.4em] uppercase font-semibold">Yasmin Akter Liza</p>
+                                <span className="w-8 h-[1px] bg-accent/50"></span>
+                                <p className="text-[10px] tracking-[0.4em] uppercase text-accent font-bold">BD. 2026</p>
+                            </div>
                         </div>
 
-                        {/* Hero Typography */}
-                        <FadeInSection className="z-40 text-center relative w-full">
-                            <p className="text-xs tracking-[0.4em] uppercase text-[#CD7F32] mb-8 md:mb-10 font-bold flex items-center justify-center gap-3">
-                                <Icon name="scan-line" className="w-5 h-5" /> Professional Portfolio
-                            </p>
+                        {/* 1. Hero Section */}
+                        <section className="relative min-h-screen w-full flex flex-col items-center justify-center pt-20 px-6 overflow-hidden">
                             
-                            <h1 className="text-[16vw] md:text-[10vw] lg:text-[8vw] font-serif font-light leading-[0.85] tracking-tight italic text-white/90">
-                                Yasmin <span className="text-outline font-sans font-extrabold not-italic text-white/20">Akter</span>
-                            </h1>
-                            <h1 className="text-[16vw] md:text-[10vw] lg:text-[8vw] font-extrabold leading-[0.85] tracking-tighter mt-2 md:mt-0 text-white">
-                                Liza.
-                            </h1>
-                            
-                            <div className="mt-12 md:mt-16 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-12">
-                                <div className="flex items-center gap-4 group">
-                                    <Icon name="frame" className="w-5 h-5 text-[#CD7F32] group-hover:rotate-90 transition-transform" />
-                                    <p className="text-xs tracking-[0.3em] uppercase text-gray-300 font-medium">Exterior Design</p>
+                            {/* Dynamic Dimensions Labels (Desktop) */}
+                            <div className="absolute z-30 w-full max-w-5xl h-[600px] pointer-events-none opacity-30 hidden lg:block text-accent font-mono text-[10px]">
+                                <div className="absolute top-[20%] left-[10%] w-[80%] h-[1px] bg-accent/20 flex justify-center items-center">
+                                    <span ref={dimXRef} className="bg-lightBg dark:bg-darkBg px-3 tracking-widest transition-colors duration-500">X: 0.00</span>
                                 </div>
-                                <span className="hidden sm:block w-1.5 h-1.5 rounded-full bg-[#CD7F32]/50"></span>
-                                <div className="flex items-center gap-4 group">
-                                    <Icon name="layers" className="w-5 h-5 text-[#CD7F32] group-hover:scale-110 transition-transform" />
-                                    <p className="text-xs tracking-[0.3em] uppercase text-gray-300 font-medium">Interior Planning</p>
+                                <div className="absolute top-[10%] left-[20%] w-[1px] h-[80%] bg-accent/20 flex justify-center items-center">
+                                    <span ref={dimYRef} className="bg-lightBg dark:bg-darkBg py-3 tracking-widest vertical-rl rotate-180 transition-colors duration-500">Y: 0.00</span>
                                 </div>
                             </div>
-                        </FadeInSection>
-                    </section>
 
-                    {/* 2. Metrics Section */}
-                    <section className="py-20 md:py-24 px-6 md:px-20 relative z-40 bg-[#080808]">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 shadow-2xl border border-white/10 rounded-sm">
-                            <MetricCard count="20" label="BUILT PROJECTS" sub="Commercial & Residential Execution" delay={0} iconName="building-2" />
-                            <MetricCard count="28" label="MONTHS RECORD" sub="At Archvista Design Studio" delay={150} iconName="ruler" />
-                            <MetricCard count="PREMIUM" label="DESIGN QUALITY" sub="Delivering 'Joss' Spatial Experiences" delay={300} iconName="scan-line" isLast={true} />
-                        </div>
-                    </section>
+                            {/* 3D Glassmorphism Core */}
+                            <div 
+                                ref={cardRef}
+                                className="absolute z-10 w-[280px] h-[400px] sm:w-[350px] sm:h-[500px] md:w-[420px] md:h-[600px] border border-neutral-300 dark:border-neutral-800 bg-white/10 dark:bg-white/5 backdrop-blur-xl transition-transform duration-75 ease-linear shadow-2xl rounded-sm will-change-transform"
+                                style={{ transformStyle: 'preserve-3d' }}
+                            >
+                                <div className="absolute inset-0 border-l border-neutral-300 dark:border-neutral-700 [transform:translateZ(40px)]"></div>
+                                <div className="absolute inset-0 border-t border-accent/40 [transform:translateZ(-40px)]"></div>
+                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-accent/20 blur-[60px] rounded-full"></div>
+                            </div>
 
-                    {/* 3. Biography Section */}
-                    <section id="about" className="py-24 md:py-32 px-6 md:px-20 bg-[#0a0a0a] relative z-40">
-                        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-center">
-                            
-                            {/* Image Frame */}
-                            <div className="lg:col-span-5 relative group order-2 lg:order-1">
-                                <FadeInSection direction="left">
-                                    <div className="relative aspect-[4/5] rounded-sm overflow-hidden border border-white/10 bg-[#111]">
-                                        <img 
-                                            src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200" 
-                                            alt="Architectural structure representing spatial design" 
-                                            className="absolute inset-0 w-full h-full object-cover opacity-50 grayscale group-hover:scale-105 group-hover:opacity-80 transition-all duration-1000"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent opacity-90"></div>
-                                        
-                                        <div className="absolute top-6 left-6 md:top-10 md:left-10 p-4 border-l-2 border-[#CD7F32]">
-                                            <span className="text-xs tracking-[0.4em] uppercase text-[#CD7F32] font-bold">Biography</span>
-                                        </div>
-                                        
-                                        <div className="absolute bottom-8 left-8 right-8 md:bottom-12 md:left-12 md:right-12">
-                                            <h4 className="text-4xl md:text-5xl font-serif italic text-white mb-3 leading-none tracking-tighter">Yasmin Akter</h4>
-                                            <p className="text-xs tracking-[0.2em] uppercase text-gray-300 font-bold mb-5">Principal Architect & Visionary</p>
-                                            <div className="h-[1px] w-full bg-white/20"></div>
-                                            <p className="mt-5 text-sm text-[#CD7F32] tracking-widest font-bold uppercase italic">"Proudly Mr. Raw's Wife"</p>
-                                        </div>
+                            {/* Hero Typography */}
+                            <FadeInSection className="z-40 text-center relative w-full mix-blend-difference dark:mix-blend-normal">
+                                <p className="text-xs tracking-[0.4em] uppercase text-accent mb-8 font-bold flex items-center justify-center gap-3">
+                                    <Icon name="scan-line" className="w-4 h-4" /> Spatial Visionary
+                                </p>
+                                
+                                <h1 className="text-[14vw] md:text-[9vw] lg:text-[7.5vw] font-serif font-light leading-[0.9] tracking-tight italic">
+                                    Yasmin <span className={isDark ? "text-outline-dark font-sans font-extrabold not-italic" : "text-outline-light font-sans font-extrabold not-italic"}>Akter</span>
+                                </h1>
+                                <h1 className="text-[14vw] md:text-[9vw] lg:text-[7.5vw] font-extrabold leading-[0.9] tracking-tighter mt-1">
+                                    Liza.
+                                </h1>
+                                
+                                <div className="mt-14 flex flex-col sm:flex-row justify-center items-center gap-6 sm:gap-10">
+                                    <div className="flex items-center gap-3 group">
+                                        <Icon name="box" className="w-4 h-4 text-accent group-hover:rotate-12 transition-transform" />
+                                        <p className="text-[11px] tracking-[0.2em] uppercase font-medium text-neutral-600 dark:text-neutral-400">Exterior Design</p>
                                     </div>
-                                </FadeInSection>
+                                    <span className="hidden sm:block w-1 h-1 bg-accent/50 rounded-full"></span>
+                                    <div className="flex items-center gap-3 group">
+                                        <Icon name="layout-template" className="w-4 h-4 text-accent group-hover:scale-110 transition-transform" />
+                                        <p className="text-[11px] tracking-[0.2em] uppercase font-medium text-neutral-600 dark:text-neutral-400">Interior Planning</p>
+                                    </div>
+                                </div>
+                            </FadeInSection>
+                        </section>
+
+                        {/* 2. Metrics Section */}
+                        <section className="py-16 md:py-20 px-6 md:px-12 relative z-40">
+                            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 border border-neutral-200 dark:border-neutral-800 rounded-lg overflow-hidden shadow-sm dark:shadow-2xl bg-white dark:bg-[#0a0a0a] transition-colors duration-500">
+                                <MetricCard count="20+" label="Built Projects" sub="Commercial & Residential Execution" delay={0} iconName="building" />
+                                <MetricCard count="2.4" label="Years Exp." sub="At Archvista Design Studio" delay={150} iconName="ruler" />
+                                <MetricCard count="100%" label="Design Quality" sub="Delivering Premium Spatial Experiences" delay={300} iconName="star" isLast={true} />
                             </div>
-                            
-                            {/* Manifesto Text */}
-                            <div className="lg:col-span-7 space-y-10 lg:space-y-12 order-1 lg:order-2">
+                        </section>
+
+                        {/* 3. Manifesto / Biography */}
+                        <section id="manifesto" className="py-20 md:py-32 px-6 md:px-12 relative z-40 bg-white/50 dark:bg-[#080808]/50 border-y border-neutral-200 dark:border-neutral-900 transition-colors">
+                            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-20 items-center">
+                                
+                                <div className="lg:col-span-5 relative group order-2 lg:order-1">
+                                    <FadeInSection direction="left">
+                                        <div className="relative aspect-[3/4] rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800 shadow-xl">
+                                            <img 
+                                                src="https://images.unsplash.com/photo-1511818966892-d7d671e672a2?auto=format&fit=crop&q=80&w=1200" 
+                                                alt="Architecture Presentation" 
+                                                className="absolute inset-0 w-full h-full object-cover grayscale opacity-80 group-hover:scale-105 transition-all duration-700"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                                            
+                                            <div className="absolute bottom-8 left-8 right-8 text-white">
+                                                <h4 className="text-3xl md:text-4xl font-serif italic mb-2 tracking-tight">Yasmin Akter</h4>
+                                                <p className="text-[10px] tracking-[0.2em] uppercase text-neutral-300 font-semibold mb-4">Principal Architect</p>
+                                                <div className="h-[1px] w-full bg-white/20 mb-4"></div>
+                                                <p className="text-[10px] text-accent tracking-[0.3em] font-bold uppercase italic">"Inspired by Structure"</p>
+                                            </div>
+                                        </div>
+                                    </FadeInSection>
+                                </div>
+                                
+                                <div className="lg:col-span-7 space-y-10 order-1 lg:order-2">
+                                    <FadeInSection>
+                                        <h2 className="text-[11px] tracking-[0.3em] uppercase text-neutral-500 font-bold mb-6 flex items-center gap-4">
+                                            <span className="w-8 h-[2px] bg-accent"></span> The Manifesto
+                                        </h2>
+                                        <h3 className="text-4xl sm:text-5xl md:text-6xl font-serif font-light leading-[1.1]">
+                                            Designing for the <span className="italic text-accent shimmer font-medium">future</span> of Bangladesh.
+                                        </h3>
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 text-neutral-600 dark:text-neutral-400 font-normal text-sm md:text-base leading-relaxed">
+                                            <p>Based in the heart of <strong className="text-neutral-900 dark:text-neutral-100 font-semibold">Mirpur, Dhaka</strong>, I have spent the last 2.4 years bridging the gap between artistic vision and structural feasibility. My role involves overseeing a diverse portfolio of 20+ built works.</p>
+                                            <p>My philosophy is rooted in <strong className="text-neutral-900 dark:text-neutral-100 font-semibold">Material Honesty</strong> and <strong className="text-neutral-900 dark:text-neutral-100 font-semibold">Spatial Efficiency</strong>. I believe a project is successful when it evokes true emotion and architectural brilliance.</p>
+                                        </div>
+                                    </FadeInSection>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* 4. Timeline Section */}
+                        <section className="py-20 md:py-32 px-6 md:px-12 relative z-40">
+                            <div className="max-w-7xl mx-auto">
+                                <FadeInSection className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                                    <div>
+                                        <h2 className="text-[11px] tracking-[0.3em] uppercase text-accent font-bold mb-4">Blueprint of Growth</h2>
+                                        <h3 className="text-4xl md:text-6xl font-serif font-light italic leading-none">Career Roadmap</h3>
+                                    </div>
+                                    <p className="text-sm text-neutral-500 max-w-xs font-medium leading-relaxed">A structural timeline of academic journey and professional milestones.</p>
+                                </FadeInSection>
+
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+                                    <TimelineGroup title="Professional Record" iconName="briefcase" items={[
+                                        { title: "Junior Architect", subtitle: "Archvista Design Studio", date: "Present", desc: "Spearheading exterior designs and interior project management for premium residential complexes." }
+                                    ]} />
+                                    <TimelineGroup title="Education Pathway" iconName="graduation-cap" items={[
+                                        { title: "B.Sc in Architecture", subtitle: "Currently Running", date: "Ongoing", desc: "Focusing on parametric design, urban sustainability, and advanced building physics." },
+                                        { title: "Diploma in Architecture", subtitle: "Completed", date: "Honours", desc: "Specialized in structural drawings, material science, and building site operations." }
+                                    ]} />
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* 5. Contact Section */}
+                        <section id="contact" className="py-24 md:py-32 px-6 md:px-12 bg-neutral-900 text-white dark:bg-white dark:text-black relative z-40 rounded-t-[2.5rem] md:rounded-t-[4rem] transition-colors duration-500">
+                            <div className="max-w-5xl mx-auto text-center">
                                 <FadeInSection>
-                                    <h2 className="text-sm tracking-[0.3em] uppercase text-gray-400 font-bold mb-6 flex items-center gap-4">
-                                        <span className="w-10 h-[1px] bg-[#CD7F32]"></span> Manifesto 2026
+                                    <h2 className="text-5xl md:text-7xl font-serif font-light leading-tight italic mb-8">
+                                        Let's Build your <br/> <span className="font-sans font-extrabold not-italic text-accent">Vision.</span>
                                     </h2>
-                                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-serif font-light leading-[1.1] text-white">
-                                        Designing for the <span className="italic text-[#CD7F32]">future</span> of Bangladesh.
-                                    </h3>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-10 text-gray-300 font-light text-base leading-relaxed">
-                                        <p>Based in the heart of <b className="text-white font-semibold">Mirpur, Dhaka</b>, I have spent the last <b className="text-white font-semibold">2.4 years</b> bridging the gap between artistic vision and structural feasibility. At Archvista, my role involves overseeing a diverse portfolio of 20 built works.</p>
-                                        <p>My philosophy is rooted in <b className="text-white font-semibold">Material Honesty</b> and <b className="text-white font-semibold">Spatial Efficiency</b>. I believe a project is truly successful when it creates a 'Joss' emotional response, providing users with true inspiration.</p>
+                                    
+                                    <div className="bg-white/5 dark:bg-black/5 p-10 md:p-16 rounded-3xl backdrop-blur-md border border-white/10 dark:border-black/10 mt-12 shadow-2xl">
+                                        <p className="text-[11px] tracking-[0.3em] uppercase font-bold text-neutral-400 dark:text-neutral-500 mb-6">Official Channel</p>
+                                        
+                                        <a href="mailto:lyasminakter16@gmail.com" className="text-2xl sm:text-3xl md:text-5xl font-bold hover:text-accent transition-colors duration-300 break-all sm:break-normal">
+                                            lyasminakter16@gmail.com
+                                        </a>
+                                        
+                                        <div className="flex justify-center gap-8 mt-12 text-[11px] uppercase tracking-[0.2em] font-bold">
+                                            <a href="#" className="flex items-center gap-2 hover:text-accent transition-all group"><Icon name="linkedin" className="w-4 h-4 group-hover:-translate-y-1 transition-transform"/> LinkedIn</a>
+                                            <a href="#" className="flex items-center gap-2 hover:text-accent transition-all group"><Icon name="file-text" className="w-4 h-4 group-hover:-translate-y-1 transition-transform"/> Download CV</a>
+                                        </div>
+                                    </div>
+                                    
+                                    <div className="mt-16 flex items-center justify-center gap-3 text-neutral-400 dark:text-neutral-600">
+                                        <Icon name="map-pin" className="text-accent w-4 h-4" />
+                                        <p className="text-xs font-bold uppercase tracking-[0.2em]">Mirpur // Dhaka // BD</p>
                                     </div>
                                 </FadeInSection>
                             </div>
-                        </div>
-                    </section>
+                        </section>
 
-                    {/* 4. Timeline Section */}
-                    <section className="py-24 md:py-32 px-6 md:px-20 relative z-40 border-t border-white/10 bg-[#080808]">
-                        <div className="max-w-7xl mx-auto">
-                            <FadeInSection className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
-                                <div className="max-w-xl">
-                                    <h2 className="text-xs tracking-[0.3em] uppercase text-[#CD7F32] font-bold mb-4 md:mb-6">Blueprint of Growth</h2>
-                                    <h3 className="text-5xl sm:text-6xl md:text-7xl font-serif font-light text-white italic leading-none">Career Roadmap</h3>
-                                </div>
-                                <p className="text-base text-gray-400 max-w-xs font-light leading-relaxed tracking-wide">A comprehensive look into my academic journey and professional milestones.</p>
-                            </FadeInSection>
-
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 md:gap-20">
-                                <TimelineGroup title="Professional Record" iconName="building-2" items={[
-                                    { title: "Junior Architect", subtitle: "Archvista Design Studio", date: "2Y 4M Exp", desc: "Spearheading architectural exterior designs and interior project management for residential complexes." }
-                                ]} />
-                                <TimelineGroup title="Education Pathway" iconName="book-open" items={[
-                                    { title: "Bachelor of Architecture", subtitle: "Currently Running", date: "Present", desc: "Focusing on parametric design, urban sustainability, and advanced building physics." },
-                                    { title: "Diploma in Architecture", subtitle: "Complete Graduate", date: "Honours", desc: "Specialized in structural drawings, material science, and building site operations." }
-                                ]} />
-                            </div>
-
-                            <div className="mt-24 md:mt-32 grid grid-cols-1 md:grid-cols-3 gap-1 shadow-2xl border border-white/10">
-                                <HighlightCard iconName="award" title="Best Team Leader" sub="Management Excellence Award" />
-                                <HighlightCard iconName="award" title="Best Intern Award" sub="Recognition of Performance" />
-                                <HighlightCard iconName="scan-line" title="Pub. Year 2023" sub="Architectural Journal Entry" isLast={true} />
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* 5. Contact Section */}
-                    <section id="contact" className="py-24 md:py-40 px-6 md:px-20 bg-white text-[#0a0a0a] relative z-40 rounded-t-[3rem] md:rounded-t-[6rem]">
-                        <div className="max-w-7xl mx-auto text-center relative overflow-hidden">
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] select-none pointer-events-none hidden lg:block">
-                                <h2 className="text-[20vw] font-bold leading-none uppercase tracking-tighter text-black">YASMIN</h2>
-                            </div>
-                            <FadeInSection>
-                                <h2 className="text-[12vw] md:text-[8vw] font-serif font-light leading-none italic mb-10 tracking-tighter">
-                                    Build your <br/> <span className="font-sans font-extrabold not-italic text-black tracking-tighter shimmer">Vision.</span>
-                                </h2>
-                                
-                                <div className="w-full max-w-3xl mx-auto bg-black/5 p-8 md:p-16 rounded-2xl backdrop-blur-xl border border-black/10 relative z-10">
-                                    <p className="text-xs tracking-[0.3em] uppercase font-bold text-gray-500 mb-8 md:mb-10">Connect via Official Channel</p>
-                                    
-                                    <a href="mailto:lyasminakter16@gmail.com" aria-label="Send an email to Yasmin" className="text-xl sm:text-2xl md:text-3xl font-bold text-black hover:text-[#CD7F32] transition-colors duration-300 break-all sm:break-normal">
-                                        lyasminakter16@gmail.com
-                                    </a>
-                                    
-                                    <div className="flex flex-wrap justify-center gap-6 md:gap-10 mt-12 md:mt-16 text-xs uppercase tracking-[0.2em] font-extrabold">
-                                        <a href="#" aria-label="Visit LinkedIn Profile" className="flex items-center gap-3 hover:text-[#CD7F32] transition-all group"><Icon name="linkedin" className="w-5 h-5 group-hover:scale-110 transition-transform"/> LinkedIn</a>
-                                        <a href="#" aria-label="Download Digital CV" className="flex items-center gap-3 hover:text-[#CD7F32] transition-all group"><Icon name="mouse-pointer-2" className="w-5 h-5 group-hover:-translate-y-1 transition-transform"/> Digital CV</a>
-                                    </div>
-                                </div>
-                                
-                                <div className="mt-16 flex items-center justify-center gap-4">
-                                    <Icon name="map-pin" className="text-[#CD7F32] w-5 h-5 md:w-6 md:h-6" />
-                                    <p className="text-sm font-bold uppercase tracking-[0.2em]">Mirpur // Dhaka // Bangladesh</p>
-                                </div>
-                            </FadeInSection>
-                        </div>
-                    </section>
-
-                    <footer className="py-10 px-6 md:px-10 bg-[#f8f8f8] text-black/60 text-xs uppercase tracking-[0.2em] font-bold flex flex-col md:flex-row justify-between items-center gap-6 border-t border-black/10 relative z-40 text-center md:text-left">
-                        <p>© 2026 YASMIN AKTER LIZA Studio</p>
-                        <p className="hidden md:block">Architectural Manifesto // Ver 5.1</p>
-                        <p>Built works: 20 Successive Projects</p>
-                    </footer>
-                </div>
+                        <footer className="py-8 px-6 bg-neutral-950 text-neutral-500 dark:bg-neutral-100 dark:text-neutral-500 text-[10px] uppercase tracking-[0.2em] font-bold flex flex-col md:flex-row justify-between items-center gap-4 text-center transition-colors">
+                            <p>© 2026 YASMIN AKTER LIZA</p>
+                            <p className="hidden md:block">Architectural Vision // Ver 6.0</p>
+                            <p>Designed for Excellence</p>
+                        </footer>
+                    </div>
+                </>
             );
         }
 
-        // --- Custom Components ---
-
+        // --- Custom UI Components ---
         const MetricCard = ({ count, label, sub, iconName, delay, isLast }) => {
-            const borderClasses = isLast ? "" : "border-b md:border-b-0 md:border-r border-white/10";
+            const borderClasses = isLast ? "" : "border-b md:border-b-0 md:border-r border-neutral-200 dark:border-neutral-800";
             return (
-                <FadeInSection delay={delay} className={`p-8 md:p-12 bg-white/[0.02] ${borderClasses} hover:bg-white/[0.05] transition-colors duration-500 group backdrop-blur-md`}>
-                    <div className="text-[#CD7F32] mb-6 md:mb-8 group-hover:rotate-12 group-hover:scale-110 transition-transform duration-300">
+                <FadeInSection delay={delay} className={`p-8 md:p-12 hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors duration-300 group ${borderClasses}`}>
+                    <div className="text-accent mb-6 group-hover:scale-110 transition-transform duration-300 transform origin-left">
                         <Icon name={iconName} className="w-6 h-6 md:w-8 md:h-8" />
                     </div>
-                    <h3 className="text-5xl md:text-6xl font-extrabold mb-3 tracking-tighter text-white group-hover:text-[#CD7F32] transition-colors">{count}</h3>
-                    <p className="text-xs font-bold tracking-[0.2em] text-white uppercase mb-2">{label}</p>
-                    <p className="text-sm text-gray-400 group-hover:text-gray-300 transition-colors leading-relaxed">{sub}</p>
+                    <h3 className="text-4xl md:text-5xl font-extrabold mb-2 tracking-tight group-hover:text-accent transition-colors">{count}</h3>
+                    <p className="text-[11px] font-bold tracking-[0.2em] uppercase mb-2">{label}</p>
+                    <p className="text-[13px] text-neutral-500 font-medium leading-relaxed">{sub}</p>
                 </FadeInSection>
             );
         };
 
         const TimelineGroup = ({ title, iconName, items }) => {
             return (
-                <div className="flex flex-col gap-8 md:gap-10">
-                    <div className="flex items-center gap-4 text-[#CD7F32]">
-                        <div className="p-3 bg-white/5 rounded-sm border border-white/10"><Icon name={iconName} className="w-5 h-5" /></div>
-                        <h4 className="text-sm tracking-[0.3em] uppercase font-extrabold text-white">{title}</h4>
+                <div className="flex flex-col gap-8">
+                    <div className="flex items-center gap-4 text-accent">
+                        <div className="p-3 bg-neutral-100 dark:bg-neutral-900 rounded-md border border-neutral-200 dark:border-neutral-800"><Icon name={iconName} className="w-5 h-5" /></div>
+                        <h4 className="text-xs tracking-[0.2em] uppercase font-bold text-neutral-900 dark:text-neutral-100">{title}</h4>
                     </div>
-                    <div className="border-l border-white/20 pl-8 md:pl-10 space-y-12 ml-4">
+                    <div className="border-l-2 border-neutral-200 dark:border-neutral-800 pl-8 space-y-10 ml-5">
                         {items.map((item, i) => (
                             <div key={i} className="relative group">
-                                <div className="absolute -left-[38px] md:-left-[46px] top-1.5 w-3 h-3 md:w-4 md:h-4 rounded-none border border-[#CD7F32] bg-[#080808] rotate-45 group-hover:bg-[#CD7F32] transition-colors duration-300"></div>
+                                <div className="absolute -left-[41px] top-1.5 w-4 h-4 bg-lightBg dark:bg-darkBg border-2 border-accent rounded-full group-hover:bg-accent transition-colors duration-300 shadow-[0_0_10px_rgba(205,127,50,0.2)]"></div>
                                 
-                                <h5 className="text-xl md:text-2xl font-extrabold tracking-tighter uppercase group-hover:text-[#CD7F32] transition-colors duration-300 leading-tight">{item.title}</h5>
-                                <div className="flex flex-wrap items-center gap-3 my-3">
-                                    <span className="text-xs font-bold text-[#CD7F32] tracking-[0.1em] uppercase">{item.subtitle}</span>
-                                    <span className="text-xs text-gray-500 font-mono tracking-tighter">[{item.date}]</span>
+                                <h5 className="text-xl md:text-2xl font-bold tracking-tight mb-1 group-hover:text-accent transition-colors duration-300">{item.title}</h5>
+                                <div className="flex items-center gap-3 mb-3">
+                                    <span className="text-[11px] font-bold text-accent tracking-[0.1em] uppercase">{item.subtitle}</span>
+                                    <span className="w-1 h-1 bg-neutral-300 rounded-full"></span>
+                                    <span className="text-[11px] text-neutral-500 font-mono font-medium">{item.date}</span>
                                 </div>
-                                <p className="text-sm text-gray-400 font-light leading-relaxed max-w-md group-hover:text-gray-300 transition-colors">{item.desc}</p>
+                                <p className="text-[14px] text-neutral-600 dark:text-neutral-400 font-medium leading-relaxed max-w-sm">{item.desc}</p>
                             </div>
                         ))}
                     </div>
-                </div>
-            );
-        };
-
-        const HighlightCard = ({ iconName, title, sub, isLast }) => {
-            const borderClasses = isLast ? "" : "border-b md:border-b-0 md:border-r border-white/10";
-            return (
-                <div className={`p-8 md:p-12 bg-white/[0.01] ${borderClasses} hover:bg-white/[0.04] transition-colors duration-500 group relative overflow-hidden`}>
-                    <div className="absolute top-0 right-0 w-8 h-[1px] bg-white/20"></div>
-                    <div className="absolute top-0 right-0 h-8 w-[1px] bg-white/20"></div>
-                    <div className="text-[#CD7F32] mb-6 md:mb-8 group-hover:scale-110 group-hover:translate-x-2 transition-transform duration-300">
-                        <Icon name={iconName} className="w-6 h-6 md:w-8 md:h-8" />
-                    </div>
-                    <h5 className="text-lg md:text-xl font-extrabold tracking-tighter uppercase group-hover:text-white transition-colors">{title}</h5>
-                    <p className="text-xs tracking-[0.2em] text-gray-400 mt-2 font-bold group-hover:text-[#CD7F32] transition-colors uppercase">{sub}</p>
                 </div>
             );
         };
